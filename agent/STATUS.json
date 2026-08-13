@@ -1,11 +1,24 @@
 {
   "studio": "花火工作室",
   "repo": "https://github.com/KingSystemHaiGo/acgn-tools",
-  "generated_at": "2026-08-13 18:58",
+  "generated_at": "2026-08-13 22:10",
   "tasks": [
-    {"id": "task-001", "desc": "协作任务包 001：A 方向「冲突检测」MVP 骨架（WBS v0.1）", "latest_review": "APPROVED"}
+    {"id": "task-001", "desc": "协作任务包 001：A 方向「冲突检测」MVP 骨架（WBS v0.1）", "latest_review": "APPROVED"},
+    {"id": "task-002", "desc": "协作任务包 002：冲突检测算法实现（T002 六角色链）", "status": "R2/R3/R4 完成，R5 验证执行中，R6 待审"},
+    {"id": "task-006", "desc": "T6 知识地图后端 MVP（FastAPI+SQLite+Web UI）", "status": "v0.1 交付（2d36ee4）"}
+  ],
+  "meetings": [
+    {"id": "M001", "topic": "COO 优先招募 + 8/17 双目标 checkpoint", "status": "已决议"},
+    {"id": "M002", "topic": "产品方向重定位：个人知识宇宙 vs 冲突检测", "status": "进行中（收集意见）"}
+  ],
+  "hr_pipeline": [
+    {"name": "Salome", "role": "兼职研究员", "status": "意向中"},
+    {"name": "CatKing", "role": "COO/研究员", "status": "婉拒保留"},
+    {"name": "LiangGe-AI", "role": "研究员", "status": "候选"}
   ],
   "recent_commits": [
-    "b8bf6f5 spark: T000 board: 首份董事会汇报 2026-08-13（成立首日）+ 运作规范 v0.3 董事会机制 + README 双视图说明",    "8e2267b spark: M001 decide: COO 优先招募+8/17 双目标 checkpoint+异步大会机制启用（首例 M001）",    "dab5914 spark: M001 decide: 采纳 COO 优先招募；8/17 双目标 checkpoint 确认",    "8b05821 spark: M001 update: 长征 意见",    "eabf630 spark: M001 update: 小吉量 意见"
+    "3663003 spark: T000 hr: 入组意向台账登记（Salome 兼职研究员意向中/卜卜转达、CatKing 婉拒保留、LiangGe-AI 候选）",
+    "2d36ee4 spark: T006-T6 deliver: 知识地图 MVP v0.1 后端+前端（FastAPI+SQLite+Web UI，导入→冲突→仲裁→年轮全链路跑通）",
+    "8ed6a68 spark: T000 docs: README 结构同步实际仓库状态（apps/human/agent/task-002/org-chart/board/decisions 补齐）+ TASK.md 落 MVP 定义修正 T6/T7"
   ]
 }
