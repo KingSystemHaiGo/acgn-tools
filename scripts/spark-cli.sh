@@ -39,7 +39,9 @@ status() {
 review() {
   local tid="${1:-}"
   [ -z "$tid" ] && echo "用法: spark-cli.sh review <任务ID>" && exit 1
-  local f="$REPO_DIR/docs/$tid/REVIEWS.md"
+  # 任务 ID → 任务目录映射（T001-T1 → task-001）
+  local taskdir=$(echo "$tid" | sed 's/-T[0-9]*$//' | sed 's/^T/task-/' | tr 'A-Z' 'a-z')
+  local f="$REPO_DIR/docs/$taskdir/REVIEWS.md"
   if [ -f "$f" ]; then
     cat "$f"
   else
@@ -80,10 +82,12 @@ review_reject() {
 
 review_impl() {
   local tid="$1" st="$2" verdict="$3"
-  local dir="$REPO_DIR/docs/$tid"
+  # 任务 ID → 任务目录映射（T001-T1 → task-001）
+  local taskdir=$(echo "$tid" | sed 's/-T[0-9]*$//' | sed 's/^T/task-/' | tr 'A-Z' 'a-z')
+  local dir="$REPO_DIR/docs/$taskdir"
   mkdir -p "$dir"
   local f="$dir/REVIEWS.md"
-  [ -f "$f" ] || echo "# $tid 评审记录（append-only）" > "$f"
+  [ -f "$f" ] || echo "# $taskdir 评审记录（append-only）" > "$f"
   {
     echo ""
     echo "## $tid review ($(date '+%Y-%m-%d %H:%M') by ${SPARK_REVIEWER:-$(git config user.name 2>/dev/null || echo unknown)})"
