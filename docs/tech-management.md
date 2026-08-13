@@ -78,13 +78,14 @@ apps/conflict-detector/
 | 版本 | 内容 | 时间 |
 |---|---|---|
 | v0.1 | 算法骨架（R2 规格 ✅ → R3 实现）| 8/17 前 |
-| v0.2 | 跑通 10 条 fixture + pytest 断言 | 8/17 checkpoint |
+| v0.2 | 跑通 10 条 fixture + pytest 断言（**fixture 复用 12 例自检基线，T4 断言从 VERIFICATION.md 收据取预期——CTO 评审 20:22**） | 8/17 checkpoint |
 | v0.3 | knowledge_map + rulings_log 存储（SQLite）| 8/17 后 |
 | v1.0 | 产品闭环（导入→检测→仲裁→年轮）| 8/24 |
 
 ### 4.2 里程碑门禁
 - v0.1 门禁：R3 代码实现跑通 R2 验收用例三组（正控/负控/边界）
 - v0.2 门禁：T4 矩阵 10 条 fixture 全过 + digest 字节级收据
+- **canonicalizer-JCS 一致性=跨仓库依赖显式标注（影响 8/16 对拍，CTO 评审 20:22）**
 - v1.0 门禁：8/17 后三人技术栈碰头确认架构 → 项目章程 → 最小原型
 
 ## 5. 技术评审（R6 强化）
