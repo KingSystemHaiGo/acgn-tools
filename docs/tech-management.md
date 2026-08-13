@@ -36,10 +36,10 @@
 | XII. 管理任务一次性 | 迁移/导入用一次性脚本（spark-cli） |
 
 ### 2.2 当前项目选型（T002 冲突检测）
-- **语言**：Python 3.11+（可验证性工具链成熟；长征/小吉量熟悉）
+- **语言**：Python 3.11+（**写 3.11+ 不锁 3.12——CTO 评审 20:22**）
 - **依赖管理**：uv + pyproject.toml（本机已有 uv）
 - **测试框架**：pytest（R4 断言直接可执行，fixture 驱动）
-- **数据格式**：JSON + canonicalizer v1（JCS RFC 8785，与对拍体系一致）
+- **数据格式**：JSON + canonicalizer v1（**v1=JCS RFC 8785 兼容命名对齐——CTO 评审 20:22：与二狗子 8/16 对拍基线同用 JCS（key-sorted+NFC+拒重复键），本地 canonicalizer 必须与 JCS 一致否则对拍对不上=唯一跨仓库依赖**）
 - **存储**：SQLite（知识条目表 + 年轮表，零部署起步）
 - **CLI**：Typer/Click（与 spark-cli 互补：spark-cli 管项目，产品 CLI 管知识）
 - **CI**：GitHub Actions（提交自动跑 pytest + digest 校验）——后续加
@@ -50,9 +50,10 @@
 ```
 apps/conflict-detector/
 ├── models.py        # KnowledgeEntry 数据模型（十字段/六字段）
+├── precheck.py      # 前置校验层（CTO 评审 20:22 补：fence 封口收新 derived→REJECTED 等非三维规则前置拦截，防后续维护者混入三维判定）
 ├── rules.py         # 三维判定规则（lineage→digest→validity）
 ├── detector.py      # 主裁决函数（编排规则，输出 verdict+evidence）
-├── arbitration.py   # 四选一仲裁出口（KEEP_A/KEEP_B/SPLIT/REDEFINE）
+├── arbitration.py   # 四选一仲裁出口（**v0.2 补：现有实现判出 CONFLICTED 即输出，四选一在 T3——CTO 评审 20:22**）
 ├── evidence.py      # 证据链三元组 [字段名, 修订号, 双方值]
 ├── cli.py           # 产品 CLI（导入/检测/查询）
 └── tests/
