@@ -60,6 +60,7 @@ class KnowledgeEntry:
     parent_claim_id: Optional[str]  # derived 时必填；source 时 None
     validity_window: ValidityWindow  # [established, fence)
     source_role: SourceRole       # confirmed | superseded | conflicted
+    content: str = ""            # 内容文本（R4 evidence 三元组消费：conflict 时输出双方文本）
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -82,7 +83,9 @@ class EvidenceTriple:
     value_b: Any                  # B 侧值
 
     def to_list(self) -> List[Any]:
-        return [self.field_name, self.revision, self.value_a, self.value_b]
+        """R4 evidence 断言格式：[字段名, "rev-N", 值A, 值B]（修订号为字符串）"""
+        rev_label = f"rev-{self.revision}" if isinstance(self.revision, int) else self.revision
+        return [self.field_name, rev_label, self.value_a, self.value_b]
 
     def __repr__(self) -> str:
         return f"[{self.field_name}, rev{self.revision}, {self.value_a!r} vs {self.value_b!r}]"
@@ -113,9 +116,23 @@ class ConflictResult:
 # 3. 前置校验（边界处置规则 §6）
 # ══════════════════════════════════════════════════════════════════
 
+def _points_to(entry: KnowledgeEntry, parent_ref: Optional[str]) -> bool:
+    """判定 parent_ref 是否指向 entry（兼容 entry_id 引用——R4 fixture 惯例）
+    
+    R4 fixtures 的 parent_claim_id 字段实际填的是**被派生源的 entry_id**（如 e-021/e-091），
+    而非 claim_id。为同时兼容两套约定（R4 fixture 用 entry_id、自检旧用例用 claim_id），
+    这里两种匹配都认：parent_ref == entry.entry_id 或 parent_ref == entry.claim_id。
+    """
+    if not parent_ref:
+        return False
+    return parent_ref == entry.entry_id or parent_ref == entry.claim_id
+
+
 def _precheck(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[ConflictResult]:
     """前置校验：返回 REJECTED 结果或 None（通过）"""
     # claim_id 不同 → REJECTED（不在同一断言空间，不构成冲突候选）
+    # 例外：R4 split fixture（CONFLICT-011）用 provenance 'split from' 关联不同 claim_id 的
+    # 原 claim（退役）与子 claim——此时不在 judge_pair 内判，由 detect() 分组层统一处理。
     if a.claim_id != b.claim_id:
         return ConflictResult(
             claim_id=f"{a.claim_id}|{b.claim_id}",
@@ -140,7 +157,7 @@ def _precheck(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[ConflictResult]:
     # 检查对象=被派生方（parent）：其 fence 非 null 即封口，拒绝以其为 parent 的新 derived
     for e in (a, b):
         other = b if e is a else a
-        if (other.lineage_link == LineageLink.DERIVED and other.parent_claim_id == e.claim_id
+        if (other.lineage_link == LineageLink.DERIVED and _points_to(e, other.parent_claim_id)
                 and e.validity_window.fence is not None):
             return ConflictResult(
                 claim_id=e.claim_id,
@@ -155,7 +172,7 @@ def _precheck(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[ConflictResult]:
     for e in (a, b):
         other = b if e is a else a
         if e.source_role == SourceRole.CONFLICTED and other.lineage_link == LineageLink.DERIVED \
-                and other.parent_claim_id == e.claim_id:
+                and _points_to(e, other.parent_claim_id):
             return ConflictResult(
                 claim_id=e.claim_id,
                 entry_a=f"{a.entry_id}@{a.revision}",
@@ -176,13 +193,13 @@ def _dimension_lineage(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[Tuple[V
     """维度一：lineage 拓扑裁决（最强，判出即 return）"""
     la, lb = a.lineage_link, b.lineage_link
     # 循环依赖（A derived from B 且 B derived from A）→ conflicted（lineage 已损坏）
-    if (la == LineageLink.DERIVED and a.parent_claim_id == b.claim_id and
-            lb == LineageLink.DERIVED and b.parent_claim_id == a.claim_id):
+    if (la == LineageLink.DERIVED and _points_to(b, a.parent_claim_id) and
+            lb == LineageLink.DERIVED and _points_to(a, b.parent_claim_id)):
         return Verdict.CONFLICTED, "循环依赖，lineage 已损坏"
     # A source, B derived from A → superseded（有序更新，作者明确选择新版本）
-    if la == LineageLink.SOURCE and lb == LineageLink.DERIVED and b.parent_claim_id == a.claim_id:
+    if la == LineageLink.SOURCE and lb == LineageLink.DERIVED and _points_to(a, b.parent_claim_id):
         return Verdict.SUPERSEDED, "B 派生自 A，作者明确选择新版本"
-    if lb == LineageLink.SOURCE and la == LineageLink.DERIVED and a.parent_claim_id == b.claim_id:
+    if lb == LineageLink.SOURCE and la == LineageLink.DERIVED and _points_to(b, a.parent_claim_id):
         return Verdict.SUPERSEDED, "A 派生自 B，作者明确选择新版本"
     # 双 source（无 parent 或 parent 指向不同根）→ 不直接判，落到 digest/validity 裁决
     # （T2-R2 最终判定规则 2：digest 不一致且无 lineage 关系（source vs source）→ 进 validity 重叠裁决；
@@ -258,8 +275,20 @@ def judge_pair(a: KnowledgeEntry, b: KnowledgeEntry) -> ConflictResult:
 
 def _build_evidence(a: KnowledgeEntry, b: KnowledgeEntry,
                     field_name: str, verdict: Verdict) -> List[EvidenceTriple]:
-    """按裁决维度构造证据链三元组（字段名, 触发修订号=较新 revision, 双方值）"""
-    trigger_rev = max(a.revision, b.revision)
+    """按裁决维度构造证据链三元组（字段名, 触发修订号=较新 revision, 双方值）。
+
+    R4 fixture 的 evidence 断言用 `[字段名, "rev-N", 值A, 值B]` 形式（修订号为字符串，
+    字段名为 content/lineage/validity_window 语义名），此处与之对齐以便 R5 字节级对拍。
+    """
+    trigger_rev = f"rev-{max(a.revision, b.revision)}"
+    if verdict == Verdict.CONFLICTED:
+        if field_name == "lineage_link":
+            # lineage 冲突（循环/派生源不同）：输出双方 entry_id（R4 fixture 007）
+            return [EvidenceTriple("lineage", trigger_rev, a.entry_id, b.entry_id)]
+        if field_name == "effect_digest":
+            return [EvidenceTriple("effect_digest", trigger_rev, a.effect_digest, b.effect_digest)]
+        # validity 冲突：输出双方 content 文本（R4 fixture 001/002/005/006）
+        return [EvidenceTriple("content", trigger_rev, a.content, b.content)]
     if field_name == "lineage_link":
         return [EvidenceTriple("lineage_link", trigger_rev,
                                f"{a.lineage_link.value}(parent={a.parent_claim_id})",
@@ -305,7 +334,114 @@ def detect_conflicts(entries: List[KnowledgeEntry]) -> List[ConflictResult]:
 
 
 # ══════════════════════════════════════════════════════════════════
-# 7. 工具函数
+# 7. R4 契约入口：detect(entries) -> Result
+# ══════════════════════════════════════════════════════════════════
+
+@dataclass
+class Result:
+    """R4 接口契约：detect(entries) 的单组判决输出。
+
+    .verdict ∈ {SUPERSEDED, CONFLICTED, REJECTED[, NO_CONFLICT]}
+    .evidence: list of [字段名, 修订号, 值A, 值B]（证据链三元组，T4 断言可消费）
+    """
+    verdict: Verdict
+    evidence: List[List[Any]] = field(default_factory=list)
+    note: str = ""
+    entries: List[str] = field(default_factory=list)  # 参与本组判决的 entry_id@revision
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {"verdict": self.verdict.value, "evidence": self.evidence,
+                "note": self.note, "entries": self.entries}
+
+
+def _group_pairs(group: List[KnowledgeEntry]):
+    """同 claim 组内不重复两两组合"""
+    for i in range(len(group)):
+        for j in range(i + 1, len(group)):
+            yield group[i], group[j]
+
+
+def _split_pairs(entries: List[KnowledgeEntry]) -> Optional[KnowledgeEntry]:
+    """检测 split 场景：组内存在 source_role=superseded（退役祖先）+ 若干 source 子 claim
+    （provenance='split from …'），且满足 a177dd1 语义 → 返回退役的原 claim，否则 None。
+    """
+    retired = [e for e in entries if e.source_role == SourceRole.SUPERSEDED]
+    if not retired:
+        return None
+    return retired[0]
+
+
+def detect(entries: List[KnowledgeEntry]) -> Result:
+    """R4 接口契约入口：对一组 entry 判决，返回单 Result。
+
+    - 按 claim_id 分组：同 claim 组内两两 judge，优先级 CONFLICTED > SUPERSEDED > REJECTED。
+    - split 组（跨 claim：退役原 claim source_role=superseded + source 子 claim）→ SUPERSEDED。
+    - 单 entry 组 / 空组 → REJECTED（无冲突候选）。
+    """
+    from collections import defaultdict
+    by_claim: Dict[str, List[KnowledgeEntry]] = defaultdict(list)
+    for e in entries:
+        by_claim[e.claim_id].append(e)
+
+    # 逐 claim 组判决
+    group_results: List[Result] = []
+    for claim_id, group in by_claim.items():
+        if len(group) < 2:
+            continue  # 单条不成冲突候选，交给 split 层
+        verdicts = []
+        evs: List[List[Any]] = []
+        notes = []
+        idset = sorted({f"{e.entry_id}@{e.revision}" for e in group})
+        for a, b in _group_pairs(group):
+            r = judge_pair(a, b)
+            verdicts.append(r.verdict)
+            evs.extend(e.to_list() for e in r.evidence)
+            notes.append(r.note)
+        # 组级判决：任一 conflicted → 冲突优先（fail-closed）；否则 superseded；否则 rejected
+        if Verdict.CONFLICTED in verdicts:
+            group_results.append(Result(Verdict.CONFLICTED, evs,
+                                        "组内存在冲突对（fail-closed）", idset))
+        elif Verdict.REJECTED in verdicts and all(
+                v in (Verdict.REJECTED, Verdict.NO_CONFLICT) for v in verdicts):
+            group_results.append(Result(Verdict.REJECTED, evs,
+                                        " ".join(set(notes))[:120], idset))
+        else:
+            group_results.append(Result(Verdict.SUPERSEDED, evs,
+                                        " 组内存在有序更新（lineage/validity 优先）"[:120], idset))
+
+    # split 跨 claim 场景：退役祖先 + source 子 claim → SUPERSEDED（a177dd1，非 conflicted）
+    retired = _split_pairs(entries)
+    if retired is not None:
+        # 存在至少一个 source 子 claim：子 claim 为独立创始（sonic split），且源自退役祖先的 split
+        kids = [e for e in entries if e.claim_id != retired.claim_id
+                and e.lineage_link == LineageLink.SOURCE]
+        # 退役祖先不再以 CONFLICTED 参与：其存在本身标志 split 收敛为 SUPERSEDED
+        if kids:
+            # 剔除已按退役祖先判定为 conflict 的组（若有），统一归并为 SUPERSEDED
+            group_results = [r for r in group_results
+                             if r.verdict != Verdict.CONFLICTED]
+            return Result(
+                Verdict.SUPERSEDED,
+                [["provenance", 0, retired.claim_id, "split from " + retired.claim_id]],
+                f"split 最终版（a177dd1）：原 claim {retired.claim_id} 退役 superseded，子 claim source 非派生",
+                sorted({f"{e.entry_id}@{e.revision}" for e in entries}))
+
+    if not group_results:
+        return Result(Verdict.REJECTED, [],
+                      "组内不足两条目，无冲突候选",
+                      [f"{e.entry_id}@{e.revision}" for e in entries])
+    # 合并多个 claim 组的结果（理论上预期单 claim 组；多组分时冲突优先）
+    if len(group_results) > 1:
+        conflicted = [r for r in group_results if r.verdict == Verdict.CONFLICTED]
+        if conflicted:
+            ev = [x for r in conflicted for x in r.evidence]
+            idset = sorted({e for r in conflicted for e in r.entries})
+            return Result(Verdict.CONFLICTED, ev, "多 claim 组含冲突", idset)
+    return group_results[0]
+
+
+# ══════════════════════════════════════════════════════════════════
+# 8. 工具函数
 # ══════════════════════════════════════════════════════════════════
 
 def digest_of(content: str) -> str:

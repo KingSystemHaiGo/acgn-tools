@@ -37,10 +37,28 @@
 5. **fail-closed 只在兜底层**：validity 重叠即 conflicted（升格人工仲裁），不自动降级；conflicted 条目只能由用户仲裁（split 四选一出口在 T3 仲裁流程）。
 
 ## 待办
-- [ ] T4 测试门禁（澄川/星星✨）按此收据对断言
+- [x] T4 测试门禁接口对齐（R4 契约 detect(entries)->Result）
+- [ ] T4 pytest 套件由 R5 双方跑（星星✨ fixture + 本收据对拍）
 - [ ] 8/17 checkpoint 演示闭环（T5 集成）
+
+## R4 接口对齐（20:4x 更新，commit e7dcefd 后续）
+新增 `detect(entries) -> Result` 契约入口（Result.verdict ∈ {SUPERSEDED,CONFLICTED,REJECTED} + .evidence 列表），
+保留 judge_pair/detect_conflicts 供审计。修复两处与 R4 holder fixture 的对齐点：
+1. **parent 引用按 entry_id 解析**（R4 fixture 的 parent_claim_id 填的是被派生源 entry_id，如 e-021/e-091）——
+   兼容 entry_id 与 claim_id 两套匹配（`_points_to`）。修复后 CONFLICT-003（derived 细化→SUPERSEDED）
+   与 CONFLICT-010（fence 封口→REJECTED）不再误判。
+2. **split 语义（a177dd1）**：退役祖先（source_role=superseded）+ source 子 claim → 判定 SUPERSEDED 非 conflicted
+   （CONFLICT-011），子 claim 为独立 source 非 derived。
+3. **证据链对齐 R4 断言**：validity 冲突输出 `["content", rev-N, 双方文本]`；lineage 冲突输出
+   `["lineage", rev-N, entryA, entryB]`；修订号为 `rev-N` 字符串——与 R4 fixture 逐字节一致。
+
+**R4 全量 fixture 复跑：11/11 PASS（verdict+evidence 对拍）**
+```
+001 CONFLICTED / 002 CONFLICTED / 003 SUPERSEDED / 004 SUPERSEDED / 005 CONFLICTED /
+006 CONFLICTED / 007 CONFLICTED / 008 REJECTED / 009 REJECTED / 010 REJECTED / 011 SUPERSEDED
+```
+
 ## 字节级证据（sha256sum，禁手抄）
 ```
-a1b433f706afd5fa5428430d7863d457b4ad25b75bc59ded5e3f82815460eea6  conflict_detector.py
-066804705532591c84f863f33d37c4641e2f37fa985a094e39c741fbf52df0c6  VERIFICATION.md
+297c8419afcce537516e741d0cd4b7c95161d886ea8de2296afe5664ab5ce1d1  conflict_detector.py
 ```
