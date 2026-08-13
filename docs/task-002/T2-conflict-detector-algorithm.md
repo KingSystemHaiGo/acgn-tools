@@ -22,10 +22,14 @@
 3. digest 语义裁决 → 有则返回
 4. validity 重叠裁决 → 返回
 
-## 5. split 四选一仲裁出口
-verdict=CONFLICTED 触发人工仲裁：KEEP_A_SUPERSEDE_B / KEEP_B_SUPERSEDE_A / **SPLIT（原 claim_id superseded，新 claim_A+B 各持一 digest，父 claim 不替代仅封口冻结）** / REDEFINE
-split 特殊规则：原 claim_id source_role→superseded；新 claim_A/B 各有独立 claim_id；原 validity_window.fence=split_epoch；split 单向不可撤销
-⚠️ **待最终确认**：§5「原 claim_id source_role→superseded」与「父 claim 不替代仅封口冻结」并存——按 T1-split-clarification.md（18:57 正式版）父 claim 应保持 confirmed（frozen 非 replaced）；若 source_role→superseded 与「不替代」矛盾需统一（建议：原 claim 保持 confirmed，仅 fence=split_epoch 封口）
+## 5. split 四选一仲裁出口（修正版 19:50）
+verdict=CONFLICTED 触发人工仲裁四选一：
+- **KEEP_A_SUPERSEDE_B**：保留 A，B source_role→superseded（A 被 B 替代）
+- **KEEP_B_SUPERSEDE_A**：保留 B，A source_role→superseded（B 被 A 替代）
+- **SPLIT**：原 claim_id source_role **保持 confirmed（不变）**，validity_window.fence=split_epoch 封口（frozen 非 replaced）；新 claim_A+新 claim_B 各持一 digest，父 claim 没有被替代只是被拆分后冻结
+- **REDEFINE**：重新定义 claim
+**核心修正：split 时原 claim_id source_role 保持 confirmed，不是 superseded。frozen 非 replaced。**
+split 特殊规则：新 claim_A/B 各有独立 claim_id；原 validity_window.fence=split_epoch；split 单向不可撤销
 
 ## 6. 边界处置规则
 - claim_id 不同 → REJECTED
