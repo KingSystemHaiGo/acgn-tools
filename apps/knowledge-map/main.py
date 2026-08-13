@@ -173,19 +173,25 @@ def arbitrate(req: ArbitrateReq):
 
 @app.get("/api/knowledge-map")
 def knowledge_map():
-    """三态分布 + 条目概览"""
+    """知识宇宙：三态分布（纳入/搁置/求索）+ 全量条目列表"""
     with db() as c:
         total = c.execute("SELECT COUNT(*) n FROM entries").fetchone()["n"]
-        by_role = c.execute(
-            "SELECT source_role r, COUNT(*) n FROM entries GROUP BY source_role"
+        entries = c.execute(
+            "SELECT claim_id, entry_id, content, source_role, created_at FROM entries ORDER BY created_at DESC LIMIT 50"
         ).fetchall()
-        recent = c.execute(
-            "SELECT claim_id, content, source_role, created_at FROM entries ORDER BY created_at DESC LIMIT 10"
-        ).fetchall()
+    # 三态映射：source/confirmed=纳入（我验证过的）｜ superseded/derived=搁置（存疑）｜ conflicted=求索（想要方向）
+    by_role = {"nascent": 0, "shelved": 0, "seeking": 0}
+    for e in entries:
+        if e["source_role"] in ("source", "confirmed"):
+            by_role["nascent"] += 1
+        elif e["source_role"] in ("superseded", "derived"):
+            by_role["shelved"] += 1
+        elif e["source_role"] == "conflicted":
+            by_role["seeking"] += 1
     return {
         "total": total,
-        "by_role": {r["r"]: r["n"] for r in by_role},
-        "recent": [dict(r) for r in recent],
+        "by_role": by_role,
+        "entries": [dict(r) for r in entries],
     }
 
 
