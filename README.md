@@ -18,6 +18,7 @@ acgn-tools/
 ├── README.md              # 本文件（协作入口）
 ├── docs/
 │   ├── charter.md         # 工作室章程
+│   ├── org.md             # 组织架构与成员名册（入职/离职留档）
 │   ├── operations.md      # 运作规范（协作/复盘/产物/项目管理）
 │   ├── roles.md           # 职责矩阵（专人专岗）
 │   ├── roadmap.md         # 滚动路线图
