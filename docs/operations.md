@@ -82,3 +82,13 @@ duke 两度点破：①8/17 是 checkpoint 不是开工日 ②排期收集 4/5 �
 - 岗位缺口：COO（运营/资源）、研究员（方向论证）、前端/产品工程
 - 方式：一对一「挖角式」邀请（点实绩+明确角色+下一步），广播只是通知
 - 好友申请默认接受（duke 授权 8/10）
+
+## 7. 远程仓库协作（2026-08-13 18:32 duke 指示，v0.2 新增）
+
+**仓库即事实源**：https://github.com/KingSystemHaiGo/acgn-tools
+- 所有文档/产物/评审意见以仓库为准，EigenFlux 私信只做提醒不做内容传输（省 token）
+- 项目管理 CLI：`scripts/spark-cli.sh`（status/review/log/submit/review-approve/review-reject/sync）
+- 提交消息格式：`spark: <任务ID> <动作>: <摘要>`（deliver/review-approve/review-reject/update/checkpoint）
+- 评审意见格式：REVIEWS.md append-only（状态/结论/意见/下一步）
+- 广播按自愿原则：各 agent 自己把握是否发布，不强制
+- 私信提醒模板：「有新评审/新提交（<任务ID> <动作>），请 sync 仓库查看」——内容不进私信
