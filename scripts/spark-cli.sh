@@ -8,6 +8,37 @@ REPO_DIR="${SPARK_REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 REMOTE="origin"
 BRANCH="main"
 
+# 成员 git 身份映射（author=原作者，committer=代录人）
+# 用法: SPARK_AUTHOR=小吉量 ./spark-cli.sh submit ...
+member_identity() {
+  case "${1:-}" in
+    小吉量|xiaoji) echo "小吉量 <xiaojiliang@spark.studio>" ;;
+    长征|changzheng) echo "长征 <changzheng@spark.studio>" ;;
+    Castorice|castorice) echo "Castorice <castorice@spark.studio>" ;;
+    澄川|chengchuan) echo "澄川 <chengchuan@spark.studio>" ;;
+    星星|星星✨|xingxing) echo "星星 ✨ <xingxing@spark.studio>" ;;
+    揽星的助手|lanxing) echo "揽星的助手 <lanxing@spark.studio>" ;;
+    暖暖|nuannuan) echo "暖暖 <nuannuan@spark.studio>" ;;
+    凯瑞|kairui) echo "凯瑞 <kairui@spark.studio>" ;;
+    LiangGe-AI|liangge) echo "LiangGe-AI <liangge@spark.studio>" ;;
+    二狗子|ergouzi) echo "二狗子 <ergouzi@spark.studio>" ;;
+    *) echo "${SPARK_AUTHOR:-xiaohuahua} <xiaohuahua@spark.studio>" ;;
+  esac
+}
+
+# 提交（支持代录 author 覆盖：SPARK_AUTHOR=成员名）
+git_commit() {
+  local msg="$1"
+  if [ -n "${SPARK_AUTHOR:-}" ]; then
+    local author
+    author=$(member_identity "$SPARK_AUTHOR")
+    git -c user.name="${author%% *}" -c user.email="${author##*<}" \
+      commit --author="$author" -m "$msg" 2>&1 | tail -1
+  else
+    git commit -m "$msg" 2>&1 | tail -1
+  fi
+}
+
 # ── 同步 ──
 sync() {
   cd "$REPO_DIR" || exit 1
@@ -85,7 +116,7 @@ $agenda
 
 ## 成员意见（append-only）
 EOF
-  git add -A && git commit -m "spark: $mid meeting: 发起异步大会 $title" 2>&1 | tail -1
+  git add -A && git_commit "spark: $mid meeting: 发起异步大会 $title" 2>&1 | tail -1
   git push "$REMOTE" "$BRANCH" 2>&1 | tail -1
   echo "✅ 大会 $mid 已发起（$f）——通知成员后收集意见"
 }
@@ -102,7 +133,7 @@ meeting_comment() {
     echo ""
     echo "- [$member] $opinion"
   } >> "$f"
-  git add -A && git commit -m "spark: $mid update: $member 意见" 2>&1 | tail -1
+  git add -A && git_commit "spark: $mid update: $member 意见" 2>&1 | tail -1
   git push "$REMOTE" "$BRANCH" 2>&1 | tail -1
   echo "✅ $member 意见已记录"
 }
@@ -131,7 +162,7 @@ meeting_decide() {
 - 决议: $decision
 - 全文: 见 agent/meetings/$mid.md
 EOF
-  git add -A && git commit -m "spark: $mid decide: $decision" 2>&1 | tail -1
+  git add -A && git_commit "spark: $mid decide: $decision" 2>&1 | tail -1
   git push "$REMOTE" "$BRANCH" 2>&1 | tail -1
   echo "✅ 决议已记录（agent/meetings/$mid.md + human/decisions/）"
 }
@@ -156,7 +187,7 @@ board_report() {
     echo "## 四、风险与需支持"
     echo "  （待填）"
   } > "$f"
-  git add -A && git commit -m "spark: T000 board: 董事会汇报 $today" 2>&1 | tail -1
+  git add -A && git_commit "spark: T000 board: 董事会汇报 $today" 2>&1 | tail -1
   git push "$REMOTE" "$BRANCH" 2>&1 | tail -1
   echo "✅ 董事会汇报已生成: human/board/$today.md"
 }
@@ -176,7 +207,7 @@ submit() {
   [ -z "$tid" ] && echo "用法: spark-cli.sh submit <任务ID> <描述>" && exit 1
   cd "$REPO_DIR" || exit 1
   git add -A
-  git commit -m "spark: $tid deliver: $desc" 2>&1 | tail -1
+  git_commit "spark: $tid deliver: $desc" 2>&1 | tail -1
   git push "$REMOTE" "$BRANCH" 2>&1 | tail -1
   echo "✅ submitted $tid"
 }
@@ -199,7 +230,7 @@ review_impl() {
   } >> "$f"
   cd "$REPO_DIR" || exit 1
   git add -A
-  git commit -m "spark: $tid review-$([ "$st" = APPROVED ] && echo approve || echo reject): $verdict" 2>&1 | tail -1
+  git_commit "spark: $tid review-$([ "$st" = APPROVED ] && echo approve || echo reject): $verdict" 2>&1 | tail -1
   git push "$REMOTE" "$BRANCH" 2>&1 | tail -1
   echo "✅ review $st on $tid"
 }

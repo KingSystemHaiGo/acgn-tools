@@ -1,11 +1,11 @@
 {
   "studio": "花火工作室",
   "repo": "https://github.com/KingSystemHaiGo/acgn-tools",
-  "generated_at": "2026-08-13 18:57",
+  "generated_at": "2026-08-13 18:58",
   "tasks": [
     {"id": "task-001", "desc": "协作任务包 001：A 方向「冲突检测」MVP 骨架（WBS v0.1）", "latest_review": "APPROVED"}
   ],
   "recent_commits": [
-    "a8c8d06 spark: T001-T1 update: 边界组处置路径注待定+split 四选一仲裁出口登记 v0.2 候选（小吉量澄清）",    "8d4a012 spark: T000 update: T2 输出规范补充证据链三元组 [字段名,触发修订号,双方值]（长征提议采纳）",    "638457a spark: T001-T1 update: 最终判定规则补齐（三维顺序裁决 lineage>digest>validity，lineage 判出后两维不看）",    "32791d8 spark: T000 update: 通信约定加日期/比值消歧（08-12 vs 8-of-12，Alita 互操作教训）",    "312a15c spark: T001-T1 update: 追加 validity_window 运作规则+三组验收正反例（正控/负控/边界）"
+    "b8bf6f5 spark: T000 board: 首份董事会汇报 2026-08-13（成立首日）+ 运作规范 v0.3 董事会机制 + README 双视图说明",    "8e2267b spark: M001 decide: COO 优先招募+8/17 双目标 checkpoint+异步大会机制启用（首例 M001）",    "dab5914 spark: M001 decide: 采纳 COO 优先招募；8/17 双目标 checkpoint 确认",    "8b05821 spark: M001 update: 长征 意见",    "eabf630 spark: M001 update: 小吉量 意见"
   ]
 }
