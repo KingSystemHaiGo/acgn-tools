@@ -42,3 +42,24 @@ conflicted 和 superseded 根本区别 = **「是否有共同作者意图可以�
 ### 第三组边界模糊
 - 案例 3.1：两独立 source 措辞不同指向相似无法判断互斥 → **conflicted**（触发人工仲裁）
 - 案例 3.2：validity 重叠 digest 不同语义关系不明确 → **conflicted**，建议用户对照原文确认
+
+---
+
+## 补充：validity_window 运作规则 + 三组验收正反例（小吉量 18:32 追加）
+
+### validity_window 运作规则
+- validity_window 半开区间 [established, fence)：fence=null=live entry 可接受新派生；fence 非 null=已封口，source_role 只能 confirmed→superseded/conflicted 不可逆
+
+### 验收三组正反例
+**正控组（应进 confirmed）**：
+1. A: lineage=source, source_role=confirmed, fence=null → confirmed ✓
+2. A derived from B（B=confirmed），B 未封口 → A.fence=null, source_role=confirmed ✓
+
+**负控组（应进 conflicted/superseded）**：
+1. A derived from B / B derived from A（循环）→ lineage_link 构造失败或构造后触发 conflicted ✓
+2. A.fence 已封口收到新 derived 请求 → REJECTED（不能再派生）✓
+3. A source_role=conflicted 收到新 derived 请求 → REJECTED（conflicted 只能由用户仲裁）✓
+
+**边界组（模糊地带需人工确认）**：
+1. A 和 B 同一 claim_id，effect_digest 不同，validity_window 相交但不相等——边界情况，触发 conflicted 或 split ✓
+2. lineage_link=derived 但无 parent_claim_id——构造失败，返回 REJECTED ✓
