@@ -67,7 +67,8 @@ meeting_new() {
   local title="${1:-无标题}" agenda="${2:-}"
   cd "$REPO_DIR" || exit 1
   local n
-  n=$(ls agent/meetings/ 2>/dev/null | grep -c "^M" || echo 0)
+  n=$(ls agent/meetings/ 2>/dev/null | grep -c "^M" || true)
+  [ -z "$n" ] && n=0
   local mid="M$(printf '%03d' $((n+1)))"
   local f="agent/meetings/$mid.md"
   cat > "$f" << EOF
