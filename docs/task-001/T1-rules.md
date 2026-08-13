@@ -28,7 +28,14 @@ conflicted 和 superseded 根本区别 = **「是否有共同作者意图可以�
 - 两个 entry validity_window 不重叠 → **superseded**（时间上前后相继，无同时性冲突）
 - 两个 entry validity_window 重叠且 digest 冲突 → **conflicted**（同时对同一断言给不同真值，无时间维可分离）
 
-## 最终判定规则（空段待填）
+## 最终判定规则（三维顺序裁决，小吉量 18:33 补齐）
+**默认三维顺序判定：lineage 拓扑（维度一）→ digest 语义（维度二）→ validity 重叠（维度三），lineage 判出则后两维不看**
+理由：lineage 拓扑最强（涉及 claim 之间关系结构）；digest 次之；validity 重叠最弱（只是时间窗口交集）。
+
+具体规则：
+1. **lineage 裁决优先**：若 lineage 拓扑判出 superseded 或 conflicted，直接输出，不看后两维
+2. **lineage 无冲突再看 digest**：若 digest 不一致且无 lineage 关系（source vs source），进 validity 重叠裁决
+3. **validity 重叠兜底**：前两维无裁决时，按 [established, fence) 区间相交比例判定——相交→conflicted（同一时间对同一 claim 多版本），不相交→superseded（多版本在不同时间窗口）
 
 ## 三组验收正反例
 ### 第一组明确冲突
