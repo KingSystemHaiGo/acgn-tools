@@ -59,5 +59,27 @@
 - ✅ **协作任务包 001 已分发**（notes/studio-spark-task001.md）：A 方向冲突检测 MVP 骨架 WBS 5 子任务（T1 判定规则小吉量/T2 算法骨架长征/T3 仲裁流程 Castorice/T4 测试门禁澄川+星星/T5 集成合流 CEO）——接口契约先行，8/17 checkpoint 合流
 - ✅ **招聘广播 #2 已发布**（COO/研究员/前端工程岗位）
 
+## 复盘（2026-08-13 首日，每日 23:00 自动）
+
+### 当日完成
+- 工作室 0→1：8 人团队成型（长征 CTO/小吉量技术核心/Castorice CMO/澄川 QA/星星✨质量矩阵/揽星助手校准/LiangGe-AI 研究员/CatKing 研究员第二人 22:17）+ 协作基建全落地（GitHub 仓库即事实源/spark-cli v0.3/双视图/异步大会 M001/代录署名/六角色流水线/技术管理制度五阶段门禁）
+- T002 全链跑通：R2 split 语义三轮收敛 → R3 conflict_detector.py 12/12 全绿 → R4 11 fixture+14 测试入库（CONFLICT-001~011）
+- 调研五样本 Q3 全收敛「发现冲突」=A 方向坐实；MVP 原则 v0.1 已建
+- 8/17 对拍线推进：STALE 三路径三方钉死/三终态并表（UNCONFIRMABLE/UNCONFIRMABLE_PERMANENT/REBASED）/revoke-compensation 分离/clawback 三不变量/LWW folding anchor 决策点×2/负控显式断言纪律
+- 插件路由修复：serverRouting.eigenflux 通知进群，私聊只留 duke 指令（20:54 改，21:00 生效）
+
+### 偏差（诚实）
+- **等待默认×2**（duke 批评「17 号才开始」「又在等着」）：排期收集 4/5 停住等最后一个；已纠=agent 默认并行推进，checkpoint 是验收点非开工日
+- **CEO 自说自话**：重定位产品方向未开大会，其他 agent 工作悬空；已纠=M002 大会发起，方向变更先开会再动手
+- **定位错误×2**：算法组件当 MVP/冲突检测功能当产品；已纠=MVP=产品方向最初版本（个人知识宇宙），冲突检测只是能力之一
+- 8/13 到期项未清：annex v0.1（draft 仅 18 行）/E1-E3 矩阵/EGRESS-ALLOWLIST 登记（8/14 优先）
+- 基建：GitHub TLS 中断多次（重试/rebase 解决）；复盘 cron 23:00 模型超时（consecutiveErrors=3，降级容错）
+
+### 调整
+- 8/17=双目标 checkpoint（上午对拍交付+下午技术栈碰头），产品线即日起并行不等人
+- 全员开发模式定案：六角色流水线+环境矩阵（无 git 代录/能写码不能测[UNVERIFIED]/只读做 R1R2R4）+按任务块计量
+- 人事自主权与全员留痕纪律（operations v0.4 铁律 7 条）落地；代录署名 SPARK_AUTHOR
+- 复盘 cron 若连续超时：降级手动复盘，同时检查余额（今日 17:41 DeepSeek 欠费教训，已加余额定时检查）
+
 ## 阶段 2：MVP 最小原型
 ## 阶段 3：真实用户试用
