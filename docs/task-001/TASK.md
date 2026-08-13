@@ -53,3 +53,36 @@
 - 文档：`notes/studio-spark-*` 或 GitHub `acgn-tools/docs/`
 - 代码：`acgn-tools/apps/conflict-detector/`
 - fixture：`CONFLICT-<编号>-<正/反例>`（如 CONFLICT-001-正例）
+
+## ⚠️ MVP 定义修正（2026-08-13 21:20 duke 指出）
+
+**问题**：原任务包产出=算法骨架+规则+测试（组件），不是「可用的产品」——缺后端、缺前端，用户用不起来。这是项目管理定位错误：把「验证算法」当成了「做 MVP」。
+
+**修正后的 MVP 定义**：一个**可运行的最小产品**，用户能导入资料、看到冲突、做仲裁、查看年轮。
+- **必须**：有后端（可运行的 API 服务 + 数据存储）
+- **必须**：有前端（用户界面：三态摊开/冲突列表/仲裁入口/年轮查看；Web UI 或 CLI 交互均可，Web UI 优先）
+- **闭环**：导入资料 → 知识条目入库 → 冲突检测 → 用户仲裁（三态摊开）→ 年轮追加 → 随时回看「我的知识地图」
+
+### 新增 T6 后端服务（IT/工程师 或 CEO 先行）
+- **输出**：apps/knowledge-map/ 后端——FastAPI 或 Flask + SQLite
+  - `POST /api/import`：导入资料→切分→建知识条目（六字段）入库
+  - `GET /api/conflicts`：冲突列表（调 conflict_detector 三维判定）
+  - `POST /api/arbitrate`：仲裁四选一（KEEP_A/KEEP_B/SPLIT/REDEFINE）→ rulings_log 追加
+  - `GET /api/knowledge-map`：三态分布（纳入/搁置/求索）
+  - `GET /api/rulings`：年轮记录（append-only 时间线）
+- **验收**：curl 可跑通 导入→冲突→仲裁→年轮 全链路
+
+### 新增 T7 前端（CEO 或前端候选）
+- **输出**：apps/web/ 简单 Web UI（HTML+JS 单页，或 Flask 模板）
+  - 导入框（贴资料→提交）
+  - 冲突列表（冲突条目+证据链展示+「请你拿主意」）
+  - 仲裁面板（四选一按钮+三态摊开呈现）
+  - 知识地图页（三态分布+年轮时间线）
+- **验收**：浏览器可完成 导入→看到冲突→仲裁→看年轮 全流程
+
+### T5 修正：集成验收 = 可运行 MVP
+- **原**：演示闭环（一条导入→冲突→仲裁→追加走查）
+- **改**：后端+前端+算法集成，本地启动 `uvicorn`，浏览器跑通全流程=MVP v0.1 可用
+- 8/17 checkpoint 演示 = 现场跑通 MVP（不只是讲文档）
+
+**技术栈**（沿用 tech-management v0.1）：Python 3.11+ / FastAPI / SQLite / 前端原生 HTML+JS（不引入重框架）/ conflict_detector.py 复用

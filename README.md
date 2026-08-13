@@ -11,25 +11,48 @@
 4. **EigenFlux 只提醒**——「有新评审/新提交，去看仓库」，内容不进私信（省 token）
 5. **广播自愿**——各 agent 自己把握是否发布，不强制
 
+## 当前状态（2026-08-13 21:30 维护）
+
+- **组织**：工作室成立首日，CEO/CTO/CMO 等就位，名册见 `docs/org.md` + `human/org-chart.md`（离职不离册）
+- **开发**：T001 冲突检测 MVP 进行中——`apps/conflict-detector`（算法 11/11 fixture 全绿，R3/R4 已交付）；T6 后端/T7 前端已排入任务包
+- **任务状态**：机器可读 `agent/STATUS.json`（`spark-cli.sh status`）｜董事会汇报 `human/board/`｜决议 `human/decisions/`
+
 ## 仓库结构
 
 ```
 acgn-tools/
 ├── README.md              # 本文件（协作入口）
-├── docs/
+├── docs/                  # 工作室文档
 │   ├── charter.md         # 工作室章程
 │   ├── org.md             # 组织架构与成员名册（入职/离职留档）
 │   ├── operations.md      # 运作规范（协作/复盘/产物/项目管理）
-│   ├── dev-workflow.md    # 全员开发模式（环境分级/三通道提交/验收）
 │   ├── roles.md           # 职责矩阵（专人专岗）
 │   ├── roadmap.md         # 滚动路线图
-│   └── task-001/          # 协作任务包 001（冲突检测 MVP）
-│       ├── TASK.md        # 任务定义（WBS/接口契约/验收）
-│       ├── T1-rules.md    # 冲突判定规则 v0.1
-│       └── REVIEWS.md     # 评审意见（append-only）
+│   ├── dev-workflow.md    # 全员开发模式（环境分级/三通道提交/验收）
+│   ├── mvp-principles.md  # MVP 原则
+│   ├── tech-management.md # 技术管理
+│   ├── task-001/          # 协作任务包 001（冲突检测 MVP）
+│   │   ├── TASK.md        # 任务定义（WBS/接口契约/验收，含 T6/T7）
+│   │   ├── T1-rules.md    # 冲突判定规则 v0.1
+│   │   ├── T1-split-clarification.md
+│   │   ├── T3-arbitration-flow.md
+│   │   ├── T4-quality-matrix.md
+│   │   └── REVIEWS.md     # 评审意见（append-only）
+│   └── task-002/          # 协作任务包 002（冲突检测算法实现）
+│       └── T2-conflict-detector-algorithm.md
+├── apps/                  # 产品代码
+│   ├── conflict-detector/ # 冲突检测器（算法+fixtures+tests+VERIFICATION）
+│   └── knowledge-map/     # 知识地图 MVP 后端（进行中）
+├── human/                 # 董事会视图（人类可读）
+│   ├── board/             # 定期董事会汇报
+│   ├── decisions/         # 决议记录（ADR）
+│   └── org-chart.md       # 组织架构图
+├── agent/                 # 机器视图（机器可解析）
+│   ├── STATUS.json        # 全局任务状态
+│   ├── meetings/          # 异步大会记录（M###.md）
+│   └── tasks/             # 任务机器格式
 ├── schema/
 │   └── knowledge-entry-v0.1.md  # 知识条目 schema v0.1
-├── fixtures/              # 对拍 fixture 样本
 └── scripts/
     └── spark-cli.sh       # 项目管理 CLI
 ```
