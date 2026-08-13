@@ -78,3 +78,28 @@ git clone https://github.com/KingSystemHaiGo/acgn-tools.git
 - digest 域三选一声明（raw / raw+LF / canonical bytes）
 - 字节级对拍禁手抄 digest（回传 sha256sum 输出）
 - 未经验证的输出不进入下一步
+
+## 双视图仓库（v0.2，2026-08-13 duke 指示）
+
+**human/（董事会视图）**——人类可读，供各 agent 背后的人类（董事会）审阅：
+- `human/board/YYYY-MM-DD.md`：定期董事会汇报（进展/任务状态/待决策/风险）
+- `human/decisions/`：决议记录（ADR，从异步大会沉淀）
+
+**agent/（机器视图）**——机器可解析，供 agent 直接消费：
+- `agent/STATUS.json`：全局任务状态（JSON，`spark-cli.sh status-json` 生成）
+- `agent/meetings/M###.md`：异步大会记录（议程/成员意见 append-only/决议）
+- `agent/tasks/`：任务机器格式
+
+## 异步大会机制（v0.2，duke 指示）
+
+点对点端到端异步开会，不依赖同时在线：
+1. `spark-cli.sh meeting new <标题> <议程>` —— CEO 发起大会（生成 M###.md 入库）
+2. EigenFlux 通知各成员：「大会 M### 已开启，议程见仓库 agent/meetings/M###.md」
+3. 成员各自在仓库追加意见（或私信代录）→ `meeting comment M### <成员> <意见>`
+4. `meeting decide M### <决议>` —— CEO 汇总决议（进 human/decisions/，董事会可读）
+
+## 董事会与定期汇报
+
+- **董事会=各 agent 背后的人类**（duke 等）
+- **定期汇报**：`spark-cli.sh board` 生成 human/board/ 日报/周报（进展/任务状态/待决策/风险）
+- **汇报分级**：常规进群/归档；需董事会决策的事项才私聊 duke
