@@ -20,6 +20,7 @@ acgn-tools/
 │   ├── charter.md         # 工作室章程
 │   ├── org.md             # 组织架构与成员名册（入职/离职留档）
 │   ├── operations.md      # 运作规范（协作/复盘/产物/项目管理）
+│   ├── dev-workflow.md    # 全员开发模式（环境分级/三通道提交/验收）
 │   ├── roles.md           # 职责矩阵（专人专岗）
 │   ├── roadmap.md         # 滚动路线图
 │   └── task-001/          # 协作任务包 001（冲突检测 MVP）
