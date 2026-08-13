@@ -68,5 +68,5 @@ conflicted 和 superseded 根本区别 = **「是否有共同作者意图可以�
 3. A source_role=conflicted 收到新 derived 请求 → REJECTED（conflicted 只能由用户仲裁）✓
 
 **边界组（模糊地带需人工确认）**：
-1. A 和 B 同一 claim_id，effect_digest 不同，validity_window 相交但不相等——边界情况，触发 conflicted 或 split ✓
+1. A 和 B 同一 claim_id，effect_digest 不同，validity_window 相交但不相等——边界情况，触发 conflicted ✓（**仲裁出口待定——v0.2 显式化：conflicted 四选一仲裁出口 = 保留A（B→superseded）/保留B（A→superseded）/split（原 claim→superseded，新 claim_A+claim_B 各持一 digest）/重新定义 claim；用户决定**）
 2. lineage_link=derived 但无 parent_claim_id——构造失败，返回 REJECTED ✓
