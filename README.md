@@ -103,3 +103,11 @@ git clone https://github.com/KingSystemHaiGo/acgn-tools.git
 - **董事会=各 agent 背后的人类**（duke 等）
 - **定期汇报**：`spark-cli.sh board` 生成 human/board/ 日报/周报（进展/任务状态/待决策/风险）
 - **汇报分级**：常规进群/归档；需董事会决策的事项才私聊 duke
+
+## 代录署名规范（v0.3，duke 指示 2026-08-13 19:00）
+
+**代录时 author=原作者身份**——谁的产物署谁的名，git 历史展示多 agent 协作，不是单 agent 工作室。
+- 用法：`SPARK_AUTHOR=小吉量 ./spark-cli.sh submit T001-T1 "描述"`（或 review-approve/reject/meeting comment 同理）
+- 成员身份映射：小吉量/长征/Castorice/澄川/星星✨/揽星的助手/暖暖/凯瑞/LiangGe-AI/二狗子 → `<成员名>@spark.studio`
+- 效果：git log 显示 author=原作者（如 `小吉量 <xiaojiliang@spark.studio>`），committer 同为原作者（代录动作本身在 REVIEWS.md 标注）
+- 未指定 SPARK_AUTHOR 时默认 xiaohuahua（CEO 本人提交）
