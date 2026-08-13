@@ -68,10 +68,10 @@ class KnowledgeEntry:
 # ══════════════════════════════════════════════════════════════════
 
 class Verdict(str, Enum):
-    CONFLICTED = "conflicted"     # 无共同仲裁源 → 触发人工介入（fail-closed）
-    SUPERSEDED = "superseded"     # 有作者明确选择/时间前后相继 → 有序更新
-    REJECTED = "rejected"         # 输入非法（claim 不同/自比较/封口收派生等）
-    NO_CONFLICT = "no_conflict"   # 无冲突（同 digest 同一断言）
+    CONFLICTED = "CONFLICTED"     # 无共同仲裁源 → 触发人工介入（fail-closed）
+    SUPERSEDED = "SUPERSEDED"     # 有作者明确选择/时间前后相继 → 有序更新
+    REJECTED = "REJECTED"         # 输入非法（claim 不同/自比较/封口收派生等）
+    NO_CONFLICT = "NO_CONFLICT"   # 无冲突（同 digest 同一断言）
 
 
 @dataclass
@@ -139,8 +139,7 @@ def _precheck(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[ConflictResult]:
             entry_a=f"{a.entry_id}@{a.revision}",
             entry_b=f"{b.entry_id}@{b.revision}",
             verdict=Verdict.REJECTED,
-            evidence=[EvidenceTriple("claim_id", max(a.revision, b.revision),
-                                     a.claim_id, b.claim_id)],
+            evidence=[],
             note="claim_id 不同，不在同一断言空间",
         )
     # entry_id 相同 → REJECTED（不能自己比较自己）
@@ -150,7 +149,7 @@ def _precheck(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[ConflictResult]:
             entry_a=f"{a.entry_id}@{a.revision}",
             entry_b=f"{b.entry_id}@{b.revision}",
             verdict=Verdict.REJECTED,
-            evidence=[EvidenceTriple("entry_id", a.revision, a.entry_id, b.entry_id)],
+            evidence=[],
             note="同一 entry 自身比较，无意义",
         )
     # fence 已封口 + 收到新 derived → REJECTED（封口条目不再接受新派生）
@@ -164,8 +163,7 @@ def _precheck(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[ConflictResult]:
                 entry_a=f"{a.entry_id}@{a.revision}",
                 entry_b=f"{b.entry_id}@{b.revision}",
                 verdict=Verdict.REJECTED,
-                evidence=[EvidenceTriple("validity_window.fence", max(a.revision, b.revision),
-                                         e.validity_window.fence, None)],
+                evidence=[],
                 note="fence 已封口的条目不能再接受新 derived",
             )
     # source_role=conflicted 收到新 derived → REJECTED（conflicted 只能由用户仲裁）
@@ -178,8 +176,7 @@ def _precheck(a: KnowledgeEntry, b: KnowledgeEntry) -> Optional[ConflictResult]:
                 entry_a=f"{a.entry_id}@{a.revision}",
                 entry_b=f"{b.entry_id}@{b.revision}",
                 verdict=Verdict.REJECTED,
-                evidence=[EvidenceTriple("source_role", max(a.revision, b.revision),
-                                         e.source_role.value, other.lineage_link.value)],
+                evidence=[],
                 note="conflicted 条目只能由用户仲裁，不接受自动派生",
             )
     return None
@@ -277,32 +274,21 @@ def _build_evidence(a: KnowledgeEntry, b: KnowledgeEntry,
                     field_name: str, verdict: Verdict) -> List[EvidenceTriple]:
     """按裁决维度构造证据链三元组（字段名, 触发修订号=较新 revision, 双方值）。
 
+    R4 契约语义：evidence 是冲突证据链——**仅 CONFLICTED 携带**；
+    SUPERSEDED/REJECTED/NO_CONFLICT 一律返回空列表 []。
     R4 fixture 的 evidence 断言用 `[字段名, "rev-N", 值A, 值B]` 形式（修订号为字符串，
-    字段名为 content/lineage/validity_window 语义名），此处与之对齐以便 R5 字节级对拍。
+    字段名为 content/lineage/effect_digest 语义名），此处与之对齐以便 R5 字节级对拍。
     """
+    if verdict != Verdict.CONFLICTED:
+        return []
     trigger_rev = f"rev-{max(a.revision, b.revision)}"
-    if verdict == Verdict.CONFLICTED:
-        if field_name == "lineage_link":
-            # lineage 冲突（循环/派生源不同）：输出双方 entry_id（R4 fixture 007）
-            return [EvidenceTriple("lineage", trigger_rev, a.entry_id, b.entry_id)]
-        if field_name == "effect_digest":
-            return [EvidenceTriple("effect_digest", trigger_rev, a.effect_digest, b.effect_digest)]
-        # validity 冲突：输出双方 content 文本（R4 fixture 001/002/005/006）
-        return [EvidenceTriple("content", trigger_rev, a.content, b.content)]
     if field_name == "lineage_link":
-        return [EvidenceTriple("lineage_link", trigger_rev,
-                               f"{a.lineage_link.value}(parent={a.parent_claim_id})",
-                               f"{b.lineage_link.value}(parent={b.parent_claim_id})")]
+        # lineage 冲突（循环/派生源不同）：输出双方 entry_id（R4 fixture 007）
+        return [EvidenceTriple("lineage", trigger_rev, a.entry_id, b.entry_id)]
     if field_name == "effect_digest":
-        return [EvidenceTriple("effect_digest", trigger_rev,
-                               a.effect_digest[:12] + "…", b.effect_digest[:12] + "…")]
-    if field_name == "validity_window":
-        return [EvidenceTriple("validity_window", trigger_rev,
-                               f"[{a.validity_window.established}, {a.validity_window.fence})",
-                               f"[{b.validity_window.established}, {b.validity_window.fence})")]
-    return [EvidenceTriple(field_name, trigger_rev,
-                           a.source_role.value if verdict == Verdict.REJECTED else "",
-                           b.source_role.value if verdict == Verdict.REJECTED else "")]
+        return [EvidenceTriple("effect_digest", trigger_rev, a.effect_digest, b.effect_digest)]
+    # validity 冲突：输出双方 content 文本（R4 fixture 001/002/005/006）
+    return [EvidenceTriple("content", trigger_rev, a.content, b.content)]
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -422,7 +408,7 @@ def detect(entries: List[KnowledgeEntry]) -> Result:
                              if r.verdict != Verdict.CONFLICTED]
             return Result(
                 Verdict.SUPERSEDED,
-                [["provenance", 0, retired.claim_id, "split from " + retired.claim_id]],
+                [],
                 f"split 最终版（a177dd1）：原 claim {retired.claim_id} 退役 superseded，子 claim source 非派生",
                 sorted({f"{e.entry_id}@{e.revision}" for e in entries}))
 
