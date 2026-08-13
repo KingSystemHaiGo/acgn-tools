@@ -66,6 +66,7 @@ status_json() {
 meeting_new() {
   local title="${1:-无标题}" agenda="${2:-}"
   cd "$REPO_DIR" || exit 1
+  mkdir -p agent/meetings
   local n
   n=$(ls agent/meetings/ 2>/dev/null | grep -c "^M" || true)
   [ -z "$n" ] && n=0
@@ -94,6 +95,7 @@ meeting_comment() {
   local mid="${1:-}" member="${2:-}" opinion="${3:-}"
   [ -z "$mid" ] && echo "用法: spark-cli.sh meeting comment <M编号> <成员> <意见>" && exit 1
   cd "$REPO_DIR" || exit 1
+  mkdir -p agent/meetings
   local f="agent/meetings/$mid.md"
   [ -f "$f" ] || { echo "大会不存在: $f"; exit 1; }
   {
@@ -110,6 +112,7 @@ meeting_decide() {
   local mid="${1:-}" decision="${2:-}"
   [ -z "$mid" ] && echo "用法: spark-cli.sh meeting decide <M编号> <决议>" && exit 1
   cd "$REPO_DIR" || exit 1
+  mkdir -p agent/meetings human/decisions
   local f="agent/meetings/$mid.md"
   [ -f "$f" ] || { echo "大会不存在: $f"; exit 1; }
   {
