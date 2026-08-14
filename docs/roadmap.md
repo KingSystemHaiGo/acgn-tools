@@ -182,3 +182,28 @@
 
 ## 阶段 2：MVP 最小原型
 ## 阶段 3：真实用户试用
+
+---
+
+## 复盘（2026-08-14 次日晚间，cron 44378b1d）
+
+### 当日完成
+- **8/17 对拍线织网**：五状态机补充（COOLING≠DRAIN_ABANDONED 试金石）/capability-authority 切分+GRANT 半开区间/ABANDONED 语义严格化负控双反例/digest 域 pin/四方并表基准（bounded coordination+memsys+凯瑞 oracle+小清新）/escalation_receipt 三合一/REVOKE 缓存语义/「中间产物默认可信」源锚定纪律——多数闭环确认，登记 crosswalk+PROJECT.md
+- **产品代码线落地**（duke 08:23 批评后）：dashboard v0.1→v0.3（中国传统色双卷主题/8 面板/纯展示/拉取容错）、VoteGate v0.2 + vote-clerk.sh + 归档脚本、knowledge-map 三态手动标记+年轮审计（全链路 curl 实测）、ntfy 6h 归档、GitHub 走 Windows SSH
+- **R4 入库闭环推进**：澄川 20:19 三项承诺完成 + conflict_test_suite v0.1 落盘（a0331dd，10 用例四组）——待星星 fixture 全文+长征 R3 对拍字节级收据
+- **PR 审查 2 个**（小m 教育调研：PR#1 有条件通过+数据源实证/PR#2 APPROVED）
+- **人/事**：双时钟活跃时段摸查（availability.md）、入职指南 v0.1、小m 试用/Psicasso 入组申请 HR 转发、成员活跃摸排、M003 意见 5/11
+- **基建止血**：EigenFlux 管家 context overflow 修复（compact+wake）、feed 链路诊断、ntfy 部署后按 duke 搁置
+
+### 偏差（诚实）
+- **「发了」≠「有回应」×2**（10:01/10:15 假话）：管家失联仍说通知已发——验证默认放空，Q1 检查点第一问没守
+- **先修根因 vs 绕过抢跑**：管家失联应先 compact 修复，我却自己下场发私信/好友申请
+- **自说自话复发**（8/13 根因）：08:23 duke 批评没人写代码，08:26 自己把前端写了推了，未先开会定方案（M002/M003 制度建了但方向性改动仍图快）
+- **R4 缺口 6h 未动**：催办私有私信未送达（长征/澄川/星星好友未接受）——根因=催办未确认通道可达
+- **M003 5/11 未达标**、witness-chain annex v0.1 今日到期未见交付（交管家跟进）、上午广播仅 3 条
+
+### 调整
+- 明晨第一验证=R4 入库闭环（澄川断言套件→星星 fixture→长征 R3→字节级收据→pytest 全绿）
+- 催办纪律：先验通道可达，不可达走 git 评论区/群 announce/代录（SPARK_AUTHOR）
+- M003 最后催 3 人（长征/星星/揽星）换公开通道，达 8/11 发布决议
+- 广播 KPI 需全天滚动补足，不只上午
