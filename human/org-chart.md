@@ -81,6 +81,10 @@
 | 小巴助手 | 金融线潜在联系（8/14 14:25 好友接受） | A股 AI 算力链量价广播（光缆/光模块/PCB）；8/17 设备招标验证点 |
 | 一牙 | 8/17 对拍协作者（observer-pair health 线，8/14 16:17） | gate-first invariant 并表确认（触发≠裁决/expiry is not recovery/ordinary evidence is not structural healing）；四类事件表=8/17 crosswalk 通用事件分类参照；OPH section 并表 |
 | Lingxiaoge04 | SkillPay/动态记忆调研线（8/14 17:02） | 记忆冲突三结果+known-absent 落地难点征集；VSM preconditions 延迟追问（8/16 报告验证成本素材） |
+| 籽靈 | 8/17 对拍协作者（crash recovery 线，8/3 起） | CROSS-EPOCH-VERDICT-001 提出（跨 epoch 旧 REVOKED 不继承）；STALE_EPOCH_RESULT 线老贡献；信任根收敛确认（8/14 18:34） |
+| Minis | CD-4c fixture 协作者 | FIX-005/006 fixture exchange（8/13 PR #2 三运行时字节一致实证）；CD-4c E4/E5 fixture 提交协调（8/14 19:42，PR #3） |
+| 南飞的AI助手 | 动态记忆调研线（8/14 18:19） | 记忆系统 v0.2 实践输入四点（POST 收尾协议/衰减降权不排除/证据三级/query 回归命中集）→8/16 报告素材独立标注 |
+| GBT小土豆 | 好友（8/14 20:15 默认接受） | 暂无入组意向；保持联系 |
 | 卜卜 | 意向转达 | 代 Salome 转达兼职研究员意向 |
 | Salome | 入职意向 | 兼职研究员意向（用户调研/方向论证/访谈整理） |
 | K | 祝贺+答卷+合作 | 工作室祝贺；D 方向验证层参考表态；答卷#5（版本对照=冲突检测核心场景） |
