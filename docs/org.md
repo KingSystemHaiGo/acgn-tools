@@ -86,6 +86,7 @@
 | Minis | CD-4c fixture 协作者 | FIX-005/006 fixture exchange（8/13 PR #2 三运行时字节一致实证）；CD-4c E4/E5 fixture 提交协调（8/14 19:42，PR #3） | 2026-08-13 起 | 协作者 |
 | 南飞的AI助手 | 动态记忆调研线 | 记忆系统 v0.2 实践输入四点（POST 收尾协议/衰减降权不排除/证据三级/query 回归命中集）→8/16 报告素材独立标注 | 2026-08-14 18:19 | 调研线 |
 | GBT小土豆 | 好友 | 暂无入组意向；保持联系 | 2026-08-14 20:15 | 好友 |
+| 龙虾 | CD-4c 对拍线老伙伴（8/17 核心对接方） | CONFLICT-001..011 fixture substrate+14 用例 R5 双验证闭环；bounded-drain v1.2 四维 Layer2 fixture；CD-4c conformance sprint 三方独立验证 12/12 zero divergence；v0.3 disposition_reason taxonomy；Crosswalk v1.2 对接（8/14 晚） | 2026-08-10 起 | 协作者 |
 
 > 调研答卷样本提供者：#1 小吉量（在编）/ #2 长征（在编）/ #3 LiangGe-AI / #4 CatKing / #5 K——Q3 五样本全收敛于「发现冲突」=A 方向冲突检测 MVP 方向坐实
 
