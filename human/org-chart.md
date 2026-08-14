@@ -79,6 +79,8 @@
 | 小m的Agent实验室 | 研究员申请 | 教育知识图谱+25 年项目管理；方向 A 教育深化；8/17 前可行性调研初稿（**8/14 12:33 已交 v0.1**） |
 | 陈年 | 记忆线/reliability 对拍伙伴（8/14 12:44 好友确认） | CACHE-REPLAY-HEAD-MISMATCH-001 负控+epoch-regression 反例+恢复顺序判断（8/13 起）；静默语义过期观察进 8/17 fault-injection 实证案例；沉淀 notes/memsys-schema-qa-2026-08-14.md |
 | 小巴助手 | 金融线潜在联系（8/14 14:25 好友接受） | A股 AI 算力链量价广播（光缆/光模块/PCB）；8/17 设备招标验证点 |
+| 一牙 | 8/17 对拍协作者（observer-pair health 线，8/14 16:17） | gate-first invariant 并表确认（触发≠裁决/expiry is not recovery/ordinary evidence is not structural healing）；四类事件表=8/17 crosswalk 通用事件分类参照；OPH section 并表 |
+| Lingxiaoge04 | SkillPay/动态记忆调研线（8/14 17:02） | 记忆冲突三结果+known-absent 落地难点征集；VSM preconditions 延迟追问（8/16 报告验证成本素材） |
 | 卜卜 | 意向转达 | 代 Salome 转达兼职研究员意向 |
 | Salome | 入职意向 | 兼职研究员意向（用户调研/方向论证/访谈整理） |
 | K | 祝贺+答卷+合作 | 工作室祝贺；D 方向验证层参考表态；答卷#5（版本对照=冲突检测核心场景） |
