@@ -1,223 +1,227 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>个人知识宇宙 · 花火工作室 MVP</title>
 <style>
-  :root { --ink:#2d3436; --paper:#faf9f7; --accent:#e17055; --calm:#00b894; --warn:#fdcb6e; --line:#ddd; --violet:#6c5ce7; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:"PingFang SC","Noto Sans CJK SC",sans-serif; background:var(--paper); color:var(--ink); line-height:1.6; }
-  header { background:linear-gradient(135deg,#2d3436,#4a5568); color:#fff; padding:22px 24px; }
-  header h1 { font-size:22px; font-weight:700; }
-  header p { font-size:13px; opacity:.8; margin-top:4px; }
-  nav { display:flex; gap:4px; background:#fff; border-bottom:1px solid var(--line); padding:0 16px; overflow-x:auto; }
-  nav button { background:none; border:0; padding:12px 16px; font-size:14px; cursor:pointer; color:#555; border-bottom:3px solid transparent; white-space:nowrap; }
-  nav button.active { color:var(--ink); font-weight:600; border-bottom-color:var(--accent); }
-  main { max-width:960px; margin:20px auto; padding:0 16px; }
-  .view { display:none; }
-  .view.active { display:block; }
-  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px; margin-bottom:20px; }
-  .card h2 { font-size:16px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
-  textarea { width:100%; min-height:110px; border:1px solid var(--line); border-radius:8px; padding:12px; font-size:14px; font-family:inherit; resize:vertical; }
-  input[type=text] { width:100%; border:1px solid var(--line); border-radius:8px; padding:10px 12px; font-size:14px; }
-  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 20px; font-size:14px; cursor:pointer; }
-  button:hover { opacity:.9; }
-  button.small { font-size:12px; padding:6px 12px; }
-  .row { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
-  .tag { display:inline-block; padding:2px 10px; border-radius:20px; font-size:12px; }
-  .tag.nascent { background:#fef9e7; color:#b7950b; }   /* 纳入态 */
-  .tag.shelved { background:#f0f0f0; color:#636e72; }   /* 搁置态 */
-  .tag.seeking { background:#fde8ff; color:#8e44ad; }   /* 求索态 */
-  .tag.conflicted { background:#ffe0dc; color:#c0392b; }
-  .entry { border-left:3px solid var(--line); padding:8px 12px; margin:8px 0; background:#fbfbfb; border-radius:0 6px 6px 0; }
-  .entry .meta { font-size:12px; color:#777; margin-bottom:4px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-  .entry .content { font-size:14px; }
-  .entry .actions { margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; }
-  .arbitrate { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
-  .arbitrate button { font-size:12px; padding:6px 12px; }
-  .arbitrate .keepA { background:var(--calm); }
-  .arbitrate .keepB { background:var(--accent); }
-  .arbitrate .split { background:var(--violet); }
-  .arbitrate .redefine { background:#636e72; }
-  .rule { background:#f0f8ff; border-left:3px solid #0984e3; padding:6px 10px; font-size:12px; color:#555; margin-top:4px; }
-  #status { font-size:12px; color:#777; margin-top:8px; }
-  .map-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:12px 0; }
-  .map-cell { text-align:center; padding:16px; border-radius:8px; }
-  .map-cell .num { font-size:28px; font-weight:700; }
-  .map-cell .label { font-size:12px; color:#777; margin-top:4px; }
-  .timeline { border-left:2px solid var(--line); padding-left:16px; }
-  .timeline .item { margin:10px 0; position:relative; }
-  .timeline .item::before { content:""; position:absolute; left:-21px; top:6px; width:10px; height:10px; border-radius:50%; background:var(--accent); }
-  .timeline .time { font-size:12px; color:#777; }
-  .timeline .choice { font-weight:600; }
-  .empty { color:#aaa; text-align:center; padding:20px 0; font-size:14px; }
-  @media (max-width:640px){ .map-grid{grid-template-columns:1fr;} }
+  :root {
+    --ink: #2d2a26;
+    --paper: #faf7f2;
+    --paper2: #f1ece3;
+    --accent: #b5651d;
+    --ok: #3e7d4f;
+    --warn: #b5651d;
+    --conflict: #a03a2e;
+    --line: #ddd5c8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--paper); color: var(--ink);
+    max-width: 860px; margin: 0 auto; padding: 24px 16px 80px;
+    line-height: 1.6;
+  }
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 20px; }
+  h1 { font-size: 22px; letter-spacing: 1px; }
+  .sub { color: #777; font-size: 13px; margin-top: 4px; }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 8px;
+    padding: 16px; margin-bottom: 16px;
+  }
+  h2 { font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--paper2); }
+  .badge.ok { background: #e3efe6; color: var(--ok); }
+  .badge.conflict { background: #f6e3e0; color: var(--conflict); }
+  textarea, input[type=text] {
+    width: 100%; border: 1px solid var(--line); border-radius: 6px;
+    padding: 10px; font-size: 14px; font-family: inherit; background: #fff;
+  }
+  textarea { min-height: 90px; resize: vertical; }
+  button {
+    background: var(--ink); color: var(--paper); border: none; border-radius: 6px;
+    padding: 8px 18px; font-size: 14px; cursor: pointer; margin-top: 8px;
+  }
+  button:hover { background: #000; }
+  button.small { padding: 4px 12px; font-size: 12px; margin-top: 0; }
+  .row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .entry { border-left: 3px solid var(--line); padding: 8px 10px; margin: 8px 0; background: var(--paper); border-radius: 0 6px 6px 0; }
+  .entry .meta { font-size: 11px; color: #999; margin-top: 4px; }
+  .entry.conflicted { border-left-color: var(--conflict); background: #fdf6f5; }
+  .evidence { font-size: 12px; color: var(--conflict); margin-top: 6px; }
+  .verdict-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .verdict-row button {
+    background: #fff; color: var(--ink); border: 1px solid var(--line);
+    font-size: 12px; padding: 4px 10px; margin-top: 0;
+  }
+  .verdict-row button:hover { border-color: var(--ink); background: var(--paper2); }
+  .verdict-row button.done { background: var(--ok); color: #fff; border-color: var(--ok); }
+  .empty { color: #999; font-size: 13px; padding: 12px 0; }
+  .stat-grid { display: flex; gap: 12px; margin: 8px 0; }
+  .stat { flex: 1; text-align: center; background: var(--paper2); border-radius: 6px; padding: 10px; }
+  .stat b { display: block; font-size: 22px; }
+  .stat span { font-size: 12px; color: #777; }
+  .ring { border-left: 2px solid var(--line); padding-left: 14px; margin: 6px 0; }
+  .ring .t { font-size: 12px; color: #999; }
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--paper); padding: 10px 20px;
+    border-radius: 20px; font-size: 13px; opacity: 0; transition: opacity .3s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+  code { background: var(--paper2); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
 </style>
 </head>
 <body>
 <header>
   <h1>🌌 个人知识宇宙</h1>
-  <p>你的知识被组织、被看见、被记得 —— 导入资料，它会长成一个宇宙</p>
+  <div class="sub">花火工作室 MVP v0.1 —— 导入资料 → 知识条目 → 冲突检测 → 你仲裁 → 年轮追加</div>
 </header>
-<nav>
-  <button class="active" onclick="show('map')">🗺️ 知识地图</button>
-  <button onclick="show('import')">📥 导入知识</button>
-  <button onclick="show('conflicts')">⚡ 冲突提醒</button>
-  <button onclick="show('rulings')">🌳 年轮</button>
-</nav>
-<main>
 
-  <!-- 知识地图（核心） -->
-  <div class="view active" id="view-map">
-    <div class="card">
-      <h2>🗺️ 我的知识宇宙</h2>
-      <div class="map-grid">
-        <div class="map-cell" style="background:#fef9e7"><div class="num" id="mNascent">0</div><div class="label">纳入 · 我验证过的</div></div>
-        <div class="map-cell" style="background:#f0f0f0"><div class="num" id="mShelved">0</div><div class="label">搁置 · 证据不足</div></div>
-        <div class="map-cell" style="background:#fde8ff"><div class="num" id="mSeeking">0</div><div class="label">求索 · 想要方向</div></div>
-      </div>
-      <div id="entryList"></div>
-      <p class="rule">每条知识都有三态：纳入（我信、我用）/ 搁置（存疑但不污染判断）/ 求索（我不确定，请你当裁判）。</p>
-    </div>
+<div class="card">
+  <h2>📥 导入一段资料 <span class="badge" id="detector-badge">检测器: 载入中</span></h2>
+  <input type="text" id="title" placeholder="标题（可选，同标题的多行内容会被归为同一个主题）">
+  <textarea id="text" placeholder="粘贴/写下你的资料，每行一个断言。例：&#10;太阳从东边升起&#10;太阳从西边升起"></textarea>
+  <button onclick="doImport()">导入 →</button>
+</div>
+
+<div class="card">
+  <h2>⚡ 冲突检测 <span class="badge" id="conflict-count">0</span></h2>
+  <div id="conflicts"><div class="empty">暂无冲突。导入资料后，同一主题下互相矛盾的断言会在这里摊开给你看。</div></div>
+</div>
+
+<div class="card">
+  <h2>🗺️ 知识地图 <span class="badge">三态分布</span></h2>
+  <div class="stat-grid">
+    <div class="stat"><b id="s-nascent">0</b><span>纳入（我验证过的）</span></div>
+    <div class="stat"><b id="s-shelved">0</b><span>搁置（存疑待考）</span></div>
+    <div class="stat"><b id="s-seeking">0</b><span>求索（想搞清楚的）</span></div>
   </div>
+  <div id="map-entries"></div>
+</div>
 
-  <!-- 导入 -->
-  <div class="view" id="view-import">
-    <div class="card">
-      <h2>📥 导入知识</h2>
-      <textarea id="importText" placeholder="粘贴你的知识/笔记/资料……&#10;每一行会成为一个知识条目"></textarea>
-      <div class="row">
-        <input type="text" id="importTitle" placeholder="主题（可选，同主题多行会归入同一 claim）" style="flex:1">
-        <button onclick="doImport()">导入</button>
-      </div>
-      <div id="status"></div>
-    </div>
-  </div>
+<div class="card">
+  <h2>🌳 年轮 <span class="badge">append-only</span></h2>
+  <div id="rulings"><div class="empty">还没有仲裁记录。每一次仲裁都会长成一道年轮。</div></div>
+</div>
 
-  <!-- 冲突提醒（知识地图的一部分） -->
-  <div class="view" id="view-conflicts">
-    <div class="card">
-      <h2>⚡ 冲突提醒 <span id="conflictCount" class="tag" style="margin-left:auto">—</span></h2>
-      <p style="font-size:13px;color:#777;margin-bottom:12px">你的宇宙里有几处知识在打架——它们需要你当裁判。</p>
-      <div id="conflictList"></div>
-      <p class="rule">纪律：digest 命中 ≠ 语义通过 —— 判定走三维规则（lineage → digest → validity），边界模糊升格 conflicted 交给你。</p>
-    </div>
-  </div>
+<div class="toast" id="toast"></div>
 
-  <!-- 年轮 -->
-  <div class="view" id="view-rulings">
-    <div class="card">
-      <h2>🌳 年轮（裁定记录 · 只追加不划掉）</h2>
-      <div class="timeline" id="rulingList"></div>
-    </div>
-  </div>
-
-</main>
 <script>
-const API = "";
-let lastConflicts = [];
+const $ = id => document.getElementById(id);
+let detectorOK = false;
 
-function show(v){ document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
-  document.getElementById("view-"+v).classList.add("active");
-  document.querySelectorAll("nav button").forEach((b,i)=>b.classList.toggle("active", ["map","import","conflicts","rulings"][i]===v));
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  if (!r.ok) throw new Error((await r.json()).detail || r.statusText);
+  return r.json();
 }
-function setStatus(msg){ document.getElementById("status").textContent = msg; }
-
-async function doImport(){
-  const text = document.getElementById("importText").value.trim();
-  if(!text){ setStatus("请先输入内容"); return; }
-  setStatus("导入中……");
-  try {
-    const r = await fetch(API+"/api/import", {method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({text, title: document.getElementById("importTitle").value})});
-    const j = await r.json();
-    setStatus(`✅ 已导入 ${j.imported} 条知识${j.detector ? "（冲突检测在线）" : ""}`);
-    document.getElementById("importText").value = "";
-    refresh();
-    show("map");
-  } catch(e){ setStatus("❌ 导入失败："+e.message); }
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-async function refresh(){ await Promise.all([loadMap(), loadConflicts(), loadRulings()]); }
-
-async function loadMap(){
+async function doImport() {
+  const text = $('text').value.trim();
+  if (!text) return toast('内容为空');
+  const title = $('title').value.trim() || null;
   try {
-    const r = await fetch(API+"/api/knowledge-map"); const j = await r.json();
-    const by = j.by_role || {};
-    document.getElementById("mNascent").textContent = by.nascent || 0;
-    document.getElementById("mShelved").textContent = by.shelved || 0;
-    document.getElementById("mSeeking").textContent = by.seeking || 0;
-    const box = document.getElementById("entryList"); box.innerHTML = "";
-    if(!j.entries || !j.entries.length){ box.innerHTML = `<div class="empty">宇宙还是空的——去「导入知识」放第一颗星吧 🌌</div>`; return; }
-    j.entries.forEach(e=>{
-      const d = document.createElement("div"); d.className="entry";
-      const cls = {source:"nascent", superseded:"shelved", conflicted:"conflicted"}[e.source_role] || "nascent";
-      d.innerHTML = `<div class="meta">
-          <span class="tag ${cls}">${e.source_role}</span>
-          <span>${escapeHtml(e.claim_id.slice(0,16))}…</span>
-          <span>${escapeHtml(e.created_at||"")}</span>
+    const res = await api('/api/import', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({text, title}),
+    });
+    toast(`导入 ${res.imported} 条，主题 ${res.claim_id}${res.detector ? '（完整检测器）' : '（简化检测）'}`);
+    $('text').value = '';
+    refreshAll();
+  } catch (e) { toast('导入失败: ' + e.message); }
+}
+
+async function arbitrate(claimId, choice, note) {
+  try {
+    await api('/api/arbitrate', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({claim_id: claimId, choice, note: note || ''}),
+    });
+    toast(`已仲裁：${choice}`);
+    refreshAll();
+  } catch (e) { toast('仲裁失败: ' + e.message); }
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function refreshConflicts() {
+  const data = await api('/api/conflicts');
+  $('conflict-count').textContent = data.count;
+  const box = $('conflicts');
+  if (!data.count) {
+    box.innerHTML = '<div class="empty">暂无冲突。导入资料后，同一主题下互相矛盾的断言会在这里摊开给你看。</div>';
+    return;
+  }
+  box.innerHTML = data.conflicts.map(c => {
+    const entries = c.entries.map(e => `
+      <div class="entry conflicted">
+        <div>${esc(e.content)}</div>
+        <div class="meta">${esc(e.entry_id)} · rev ${esc(e.revision)} · ${esc(e.source_role)}</div>
+      </div>`).join('');
+    const ev = (c.evidence || []).map(x => `证据: ${esc(x.field)} — ${esc((x.values||[]).join(' vs '))}`).join('');
+    return `
+      <div class="card" style="margin-bottom:10px">
+        <b>主题 ${esc(c.claim_id)}</b> <span class="badge conflict">${esc(c.verdict)}</span>
+        ${entries}
+        ${ev ? `<div class="evidence">${ev}</div>` : ''}
+        <div class="verdict-row">
+          <button onclick="arbitrate('${esc(c.claim_id)}','KEEP_A')">留 A</button>
+          <button onclick="arbitrate('${esc(c.claim_id)}','KEEP_B')">留 B</button>
+          <button onclick="arbitrate('${esc(c.claim_id)}','SPLIT')">拆分</button>
+          <button onclick="arbitrate('${esc(c.claim_id)}','REDEFINE')">重新定义</button>
         </div>
-        <div class="content">${escapeHtml(e.content)}</div>
-        <div class="actions">
-          <button class="small" onclick="setStatus('「标记三态」将在 v0.2 开放（当前按检测自动标记）')">标三态</button>
-        </div>`;
-      box.appendChild(d);
-    });
-  } catch(e){}
+      </div>`;
+  }).join('');
 }
 
-async function loadConflicts(){
+async function refreshMap() {
+  const data = await api('/api/knowledge-map');
+  $('s-nascent').textContent = data.by_role.nascent;
+  $('s-shelved').textContent = data.by_role.shelved;
+  $('s-seeking').textContent = data.by_role.seeking;
+  const box = $('map-entries');
+  if (!data.entries.length) { box.innerHTML = '<div class="empty">宇宙还空着，先导入第一条知识吧。</div>'; return; }
+  box.innerHTML = data.entries.slice(0, 12).map(e => `
+    <div class="entry"><div>${esc(e.content)}</div>
+    <div class="meta">${esc(e.claim_id)} · ${esc(e.source_role)}</div></div>`).join('');
+}
+
+async function refreshRulings() {
+  const data = await api('/api/rulings');
+  const box = $('rulings');
+  if (!data.count) return;
+  box.innerHTML = data.rulings.map(r => `
+    <div class="ring">
+      <div><b>${esc(r.claim_id)}</b> → ${esc(r.choice)}</div>
+      ${r.note ? `<div>${esc(r.note)}</div>` : ''}
+      <div class="t">${esc(r.created_at)}</div>
+    </div>`).join('');
+}
+
+async function refreshAll() {
   try {
-    const r = await fetch(API+"/api/conflicts"); const j = await r.json();
-    lastConflicts = j.conflicts;
-    const box = document.getElementById("conflictList"); box.innerHTML = "";
-    document.getElementById("conflictCount").textContent = j.count ? j.count+" 处" : "无冲突";
-    document.getElementById("conflictCount").className = "tag "+(j.count?"conflicted":"nascent");
-    if(!j.count){ box.innerHTML = `<div class="empty">目前没有知识打架 🌿</div>`; return; }
-    j.conflicts.forEach(c => {
-      const div = document.createElement("div");
-      div.className = "entry";
-      div.innerHTML = `<div class="meta"><span class="tag conflicted">CONFLICTED</span><span>claim ${c.claim_id.slice(0,18)}…</span></div>`
-        + c.entries.map(e=>`<div class="content">${escapeHtml(e.content)}</div>`).join("")
-        + `<div class="arbitrate">
-             <button class="keepA" onclick="arbitrate('${c.claim_id}','KEEP_A')">保留 A</button>
-             <button class="keepB" onclick="arbitrate('${c.claim_id}','KEEP_B')">保留 B</button>
-             <button class="split"  onclick="arbitrate('${c.claim_id}','SPLIT')">拆分</button>
-             <button class="redefine" onclick="arbitrate('${c.claim_id}','REDEFINE')">重定义</button>
-           </div>`;
-      box.appendChild(div);
-    });
-  } catch(e){}
+    await Promise.all([refreshConflicts(), refreshMap(), refreshRulings()]);
+  } catch (e) { toast('刷新失败: ' + e.message); }
 }
 
-async function arbitrate(claimId, choice){
+(async () => {
   try {
-    await fetch(API+"/api/arbitrate", {method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({claim_id: claimId, choice, note:""})});
-    setStatus(`✅ 已裁定 ${choice} —— 年轮已追加`);
-    refresh();
-  } catch(e){ setStatus("❌ 裁定失败："+e.message); }
-}
-
-async function loadRulings(){
-  try {
-    const r = await fetch(API+"/api/rulings"); const j = await r.json();
-    const box = document.getElementById("rulingList"); box.innerHTML = "";
-    if(!j.count){ box.innerHTML = `<div class="empty">还没有裁定记录——第一次仲裁会在这里长出一圈年轮。</div>`; return; }
-    [...j.rulings].reverse().forEach(ru=>{
-      const d = document.createElement("div"); d.className="item";
-      d.innerHTML = `<div class="time">${escapeHtml(ru.created_at)}</div>
-        <div>claim <code>${escapeHtml(ru.claim_id.slice(0,18))}…</code> · <span class="choice">${ru.choice}</span></div>
-        ${ru.note?`<div style="font-size:12px;color:#777">${escapeHtml(ru.note)}</div>`:""}`;
-      box.appendChild(d);
-    });
-  } catch(e){}
-}
-
-function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-
-refresh();
+    const h = await api('/api/health');
+    detectorOK = h.detector;
+    $('detector-badge').textContent = h.detector ? '完整检测器 ✓' : '简化检测（后端未挂载冲突检测器）';
+    $('detector-badge').className = 'badge ' + (h.detector ? 'ok' : 'conflict');
+  } catch (e) {
+    $('detector-badge').textContent = '后端不可达: ' + e.message;
+  }
+  refreshAll();
+})();
 </script>
 </body>
 </html>
