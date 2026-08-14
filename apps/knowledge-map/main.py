@@ -49,7 +49,8 @@ def init_db():
                 claim_id TEXT, entry_id TEXT PRIMARY KEY, revision TEXT,
                 effect_digest TEXT, lineage_link TEXT, parent_claim_id TEXT,
                 established INTEGER, fence INTEGER, source_role TEXT,
-                content TEXT, provenance TEXT, created_at TEXT
+                content TEXT, provenance TEXT, created_at TEXT,
+                tri_state TEXT DEFAULT NULL
             )
         """)
         c.execute("""
@@ -58,6 +59,10 @@ def init_db():
                 claim_id TEXT, choice TEXT, note TEXT, created_at TEXT
             )
         """)
+        # 兼容旧库：已有 entries 表无 tri_state 列则补上
+        cols = [r[1] for r in c.execute("PRAGMA table_info(entries)")]
+        if "tri_state" not in cols:
+            c.execute("ALTER TABLE entries ADD COLUMN tri_state TEXT DEFAULT NULL")
 
 
 init_db()
@@ -77,6 +82,12 @@ class ImportReq(BaseModel):
 class ArbitrateReq(BaseModel):
     claim_id: str
     choice: str  # KEEP_A / KEEP_B / SPLIT / REDEFINE
+    note: Optional[str] = ""
+
+
+class MarkReq(BaseModel):
+    entry_id: str
+    state: str  # nascent / shelved / seeking（三态手动标记）
     note: Optional[str] = ""
 
 
@@ -171,27 +182,62 @@ def arbitrate(req: ArbitrateReq):
     return {"ok": True, "claim_id": req.claim_id, "choice": choice, "created_at": now}
 
 
+@app.post("/api/mark")
+def mark(req: MarkReq):
+    """三态手动标记：nascent（纳入）/ shelved（搁置）/ seeking（求索）
+    知识宇宙最小闭环：用户对条目手动定三态，覆盖自动推断。"""
+    state = req.state.lower()
+    if state not in ("nascent", "shelved", "seeking"):
+        raise HTTPException(400, "state 必须是 nascent/shelved/seeking")
+    now = datetime.now().isoformat(timespec="seconds")
+    with db() as c:
+        row = c.execute(
+            "SELECT entry_id FROM entries WHERE entry_id=?", (req.entry_id,)
+        ).fetchone()
+        if not row:
+            raise HTTPException(404, f"entry {req.entry_id} 不存在")
+        c.execute(
+            "UPDATE entries SET tri_state=? WHERE entry_id=?", (state, req.entry_id)
+        )
+        # 标记动作也进年轮（append-only 审计）
+        c.execute(
+            "INSERT INTO rulings (claim_id, choice, note, created_at) VALUES (?,?,?,?)",
+            ("mark:" + req.entry_id[:20], "MARK_" + state.upper(), req.note, now),
+        )
+    return {"ok": True, "entry_id": req.entry_id, "state": state, "created_at": now}
+
+
 @app.get("/api/knowledge-map")
 def knowledge_map():
-    """知识宇宙：三态分布（纳入/搁置/求索）+ 全量条目列表"""
+    """知识宇宙：三态分布（纳入/搁置/求索）+ 全量条目列表（含手动标记 tri_state）"""
     with db() as c:
         total = c.execute("SELECT COUNT(*) n FROM entries").fetchone()["n"]
         entries = c.execute(
-            "SELECT claim_id, entry_id, content, source_role, created_at FROM entries ORDER BY created_at DESC LIMIT 50"
+            "SELECT claim_id, entry_id, content, source_role, tri_state, created_at FROM entries ORDER BY created_at DESC LIMIT 50"
         ).fetchall()
-    # 三态映射：source/confirmed=纳入（我验证过的）｜ superseded/derived=搁置（存疑）｜ conflicted=求索（想要方向）
+    # 三态：手动标记 tri_state 优先，未标记则按 source_role 推断
     by_role = {"nascent": 0, "shelved": 0, "seeking": 0}
     for e in entries:
-        if e["source_role"] in ("source", "confirmed"):
-            by_role["nascent"] += 1
-        elif e["source_role"] in ("superseded", "derived"):
-            by_role["shelved"] += 1
-        elif e["source_role"] == "conflicted":
-            by_role["seeking"] += 1
+        state = e["tri_state"]
+        if not state:
+            if e["source_role"] in ("source", "confirmed"):
+                state = "nascent"
+            elif e["source_role"] in ("superseded", "derived"):
+                state = "shelved"
+            elif e["source_role"] == "conflicted":
+                state = "seeking"
+            else:
+                state = "nascent"
+        by_role[state] = by_role.get(state, 0) + 1
+    out = []
+    for r in entries:
+        d = dict(r)
+        d["tri_state"] = d.get("tri_state") or None
+        out.append(d)
     return {
         "total": total,
         "by_role": by_role,
-        "entries": [dict(r) for r in entries],
+        "entries": out,
     }
 
 

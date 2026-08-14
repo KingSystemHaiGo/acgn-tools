@@ -188,9 +188,29 @@ async function refreshMap() {
   $('s-seeking').textContent = data.by_role.seeking;
   const box = $('map-entries');
   if (!data.entries.length) { box.innerHTML = '<div class="empty">宇宙还空着，先导入第一条知识吧。</div>'; return; }
-  box.innerHTML = data.entries.slice(0, 12).map(e => `
-    <div class="entry"><div>${esc(e.content)}</div>
-    <div class="meta">${esc(e.claim_id)} · ${esc(e.source_role)}</div></div>`).join('');
+  box.innerHTML = data.entries.slice(0, 12).map(e => {
+    const st = e.tri_state || '';
+    const stLabel = {nascent:'纳入', shelved:'搁置', seeking:'求索'}[st] || (st ? st : '未标记');
+    return `<div class="entry"><div>${esc(e.content)}</div>
+    <div class="meta">${esc(e.claim_id)} · 手动标记: ${stLabel}
+      <span class="verdict-row" style="display:inline-flex;margin-left:8px">
+        <button onclick="markEntry('${esc(e.entry_id)}','nascent')" ${st==='nascent'?'class="done"':''}>纳入</button>
+        <button onclick="markEntry('${esc(e.entry_id)}','shelved')" ${st==='shelved'?'class="done"':''}>搁置</button>
+        <button onclick="markEntry('${esc(e.entry_id)}','seeking')" ${st==='seeking'?'class="done"':''}>求索</button>
+      </span>
+    </div></div>`;
+  }).join('');
+}
+
+async function markEntry(entryId, state) {
+  try {
+    await api('/api/mark', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({entry_id: entryId, state}),
+    });
+    toast(`已标记：${state}`);
+    refreshAll();
+  } catch (e) { toast('标记失败: ' + e.message); }
 }
 
 async function refreshRulings() {
