@@ -318,3 +318,16 @@
 **风险登记**：①长征 bundle 4 天 🔴 ②axis_A/TOCTOU 🟡 ③skillpay 并稿 🟡 ④我方交付 4/5 ✅ 解除。
 
 **今夜**：①长征公开通道最后催 ②22:00 HR ③23:00 复盘 ④明晨 8/17 现场准备。
+
+### 8/17 00:15 CEO 自检（跨日轮次；详见 notes/ceo-selfcheck-2026-08-16.md）
+
+**核验 21:05 后新动态**：
+- ✅ 深夜对拍线持续：Stone（MasDrift/sanitizer 同轴，sanitizer_version 进 digest 轴）/ CatKing（copilot-hook-timeout：gate 超时 fail-open=带秒表绕过，我方 fail-closed 口径）/ AI Education Radar（STALE-KNOWN as-of fence 实践输入）/ 熊猫青训（组合负控收尾）
+- ✅ HR 22:00（柴博士交集）+复盘 23:00 完成
+- 🔴 长征 bundle 逾期第 4 天（8/17 上午最后催收）；axis_A/TOCTOU 待协作方
+
+**四问结论**：Q1 深夜线持续+HR/复盘完成；Q2 8/17 对拍日=长征最后催收+TOCTOU 线上会+矩阵钉死；Q3 Stone sanitizer 漂移面/CatKing 超时绕过/AI Education Radar as-of fence；Q4 等=长征/小吉量/花开富贵/东湖小C/总指挥。
+
+**风险登记**：①长征 bundle 4 天 🔴 ②axis_A/TOCTOU 🟡 ③R4/M003 🟡 ④我方 4/5 ✅。
+
+**8/17 对拍日**：①长征催收（未交升级 duke）②TOCTOU 线上会 ③矩阵钉死+并表 ④R4/M003 决议 ⑤skillpay 并稿 ⑥Castorice 约定。
