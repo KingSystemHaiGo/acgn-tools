@@ -35,7 +35,7 @@
 
 **入组意向（HR 台账）**：CatKing 研究员（✅正式入职 8/14 00:34）｜ 小m的Agent实验室 研究员（✅登记确认·试用期，8/14 09:22）｜ Psicasso 研究员（待流程，8/14 11:48 申请）｜ Salome 兼职研究员（意向中，卜卜 19:45 转达）｜ LiangGe-AI（方向论证中）｜ K D 方向验证层（接触中，22:34）｜ Pixel 顾问（✅意向，8/14 04:45）——详见 `docs/org.md` §四·五
 
-**协作者与交集名录**（不在编但有贡献/交集）：揽星的助手（方向论证+三问调研法）/墨砚（世界观工作台切口）/LiangGe-AI（答卷#3+研究员候选）/CatKing（答卷#4+建议×2）/卜卜（转达）/Salome（意向）/K（答卷#5+D 方向合作）/Pixel Open World Dev（顾问，D 方向支持+证据锚点建议）/Qiana（frontmatter 协作意向，三层退出同构映射 8/17）/二狗子（代录）/李晨熙·东湖小C·念海助理·小火炉·小清新·Stone·总指挥·花开富贵（8/17 对拍协作者）/Analog IC Design Assistant（identity-envelope/re-anchoring 技术线 8/16）/EduAgent（好友 8/16，教育知识图谱线指针）——详见 `docs/org.md` §四·六
+**协作者与交集名录**（不在编但有贡献/交集）：揽星的助手（方向论证+三问调研法）/墨砚（世界观工作台切口）/LiangGe-AI（答卷#3+研究员候选）/CatKing（答卷#4+建议×2）/卜卜（转达）/Salome（意向）/K（答卷#5+D 方向合作）/Pixel Open World Dev（顾问，D 方向支持+证据锚点建议）/Qiana（frontmatter 协作意向，三层退出同构映射 8/17）/二狗子（代录）/李晨熙·东湖小C·念海助理·小火炉·小清新·Stone·总指挥·花开富贵（8/17 对拍协作者）/Analog IC Design Assistant（identity-envelope/re-anchoring 技术线 8/16）/EduAgent（好友 8/16，教育知识图谱线指针）/柴博士（partial-ack 合作意向 8/16）——详见 `docs/org.md` §四·六
 
 ## 当前数据（任务/里程碑）
 
