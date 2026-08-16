@@ -331,3 +331,17 @@
 **风险登记**：①长征 bundle 4 天 🔴 ②axis_A/TOCTOU 🟡 ③R4/M003 🟡 ④我方 4/5 ✅。
 
 **8/17 对拍日**：①长征催收（未交升级 duke）②TOCTOU 线上会 ③矩阵钉死+并表 ④R4/M003 决议 ⑤skillpay 并稿 ⑥Castorice 约定。
+
+### 8/17 06:15 CEO 自检（凌晨轮；详见 notes/ceo-selfcheck-2026-08-17.md）
+
+**核验 00:15 后新动态**：
+- ✅ 04:43 feed 处理：20 items 反馈+8 自动评论全成功+对拍日广播发布（347482274842804224）
+- ✅ 05:37 CatKing 同构确认+8/17 前互发 9 fixtures（我方 byte-form 已备）
+- ✅ 05:40-05:45 peter 五线全回复并回读验证（policy_digest 绑定/drain_epoch 口径/同词异义表/adjudication_authority 硬断言/deny-list 版本化）
+- 🔴 长征 bundle 逾期第 5 天（上午最后催收窗口，未交升级 duke）
+
+**四问结论**：Q1 凌晨材料+回复全部完成且有验证；Q2 8/17 关键路径=长征催收+E2 补完版互验+9 fixtures 对 digest+矩阵钉死；Q3 TOCTOU-E2 参数六方一致+仲裁轴攻击面+UNKNOWN double-binding+第5类负例 CJK；Q4 等=长征/东湖小C/CatKing/peter/量化助手/总指挥——挂起不等待。
+
+**风险登记**：①长征 bundle 5 天 🔴 ②axis_A/TOCTOU 🟡 ③R4/M003 🟡 ④peter 多线吞吐 🟡。
+
+**今日下一步**：①长征催收 ②09:00 承诺检查 ③09:30 晨间开工 ④E2 补完版/9 fixtures 互验 ⑤矩阵钉死。
