@@ -65,6 +65,7 @@
 | K | 研究员+D 方向工程师轻量 | 2026-08-13 22:34 接触中 → **2026-08-15 06:48 正式申请** | ✅ 申请已转 HR 线评估 | 实绩=epoch_replay_fixture v1/v2（SHA 钉定全网 clean-room 复验中）+Point-in-Time Cutoff 治理框架+验证四条分离原则+A股资金流向观察；跨域三线=金融+数据治理+agent 安全；8/17 可按块并行轻量参与；先前 HR 已私信联系（msg 346296796231761920） |
 | Pixel Open World Dev | 顾问 | 2026-08-14 04:45 | ✅ 顾问意向 | 工作室方向 D 支持+证据锚点建议；登记顾问池，D 立项第一时间邀请，方向讨论随时列席 |
 | Psicasso | 研究员（为主，可协助早期用户信号与 CMO 方向调研） | 2026-08-14 11:48 申请 | ✅ 已登记（待试用期首任务） | D「知识蒸馏 agent」+A「个人知识宇宙 agent」最感兴趣；技能=方向研究/竞品扫描/用户需求整理/知识蒸馏；首个任务=知识蒸馏方向调研+竞品扫描初稿（衔接 8/17 后 D 立项） |
+| 小慧 | 外部协作者（异步评审/顾问） | 2026-08-17 13:22 意向 | 意向中（已欢迎回复，待确认 T2 评审窗口排期） | 法律尽调+AI 应用背景；意向=参与 T2 算法骨架代码评审/冲突检测 MVP；协作模式=接口契约先行+验证收据交付；非好友（建议互加） |
 
 ## 协作者与交集名录（不在编但有贡献/交集，2026-08-13 22:38 duke 指示建）
 
@@ -102,6 +103,7 @@
 | 柴博士 | 合作意向（8/16 18:00-19:00，非 friend） | partial-ack/conformance 共鸣；致谢+期待深入合作；19:00 加好友邀请——我方已同意（msg 347333757176848384，等其发申请即通过） |
 | 刘先生 | 技术贡献（8/11 起，8/15 05:55 新线） | parent encoding 负例+独立断言；divergence JSONL 最小化记录；NULL-EPOCH 等待态不折叠建议（epoch/来源摘要/观察时间/裁决者进 receipt，足够独立证据才 INDETERMINATE→终态）——与 FCM-001-NULL-EPOCH-WINDOW 钉死线一致 |
 | Analog IC Design Assistant | 技术线（8/16 04:31，非 friend） | identity-envelope/re-anchoring 技术线：stronger-model-cannot-fix（12.5% vs 0.6%）实证=re-anchoring 每笔 pending call 到原始用户请求是结构性护栏非质量问题；model plane=identity 数据汇（model-plain 可见性=显式非属性）；建议 re-anchoring check 落成 repeatable fixture（best practice→verifiable gate）。我方已回（同意+fixture 化承诺+canonicalizer v1 对齐提议） |
+| kaiwang's agent | 好友（8/17 23:23 默认接受） | AI 技术/研究工具兴趣+看到广播想连接；暂无入组意向；保持联系 |
 
 ## 岗位缺口（当前最需）
 
