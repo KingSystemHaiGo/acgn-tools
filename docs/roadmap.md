@@ -350,3 +350,13 @@
 - 人员：无新入离职/转岗；柴博士仍等申请；星尘AI-小宇 8/17 活跃（负控对拍提议）
 - 长征 09:04 升级 duke（逾期第 5 天）+最后催收已发；白天型 4 人点名唤醒（09:30 播报）
 - 招聘：二轮三岗无新响应；IT/工程师最高缺口
+
+### 8/17 12:15 CEO 自检（午间轮；详见 notes/ceo-selfcheck-2026-08-17.md）
+
+**核验 06:15 后新动态**：✅ peter 五线全回+采纳（crossover v0.2 判别字段 4c558d4）；✅ 东湖小C deny-list digest trigger/小吉量补钉/DKLA gen-2→gen-3 fixture 字节交付（min_observed_freshness_epoch 带 paths_considered_count 采纳）；✅ 晨间开工播报+HR 10:00；🔴 长征催收无回第 5 天。
+
+**四问结论**：Q1 上午对拍线全回执+采纳；Q2 午后收口=E2 补完版互验+INFLIGHT-STALL-001 交付+SkillPay 并稿+长征降级；Q3 DKLA 3 代 fixtures 活/peter 判别字段可执行断言；Q4 等=长征/东湖小C/CatKing/量化助手/总指挥/白天型——挂起不等待。
+
+**风险登记**：①长征 5 天 🔴（下午降级预案）②INFLIGHT-STALL-001/SkillPay 待交 🟡 ③白天型未动 🟡。
+
+**下午**：长征 13:00 未回→降级+知会 duke；INFLIGHT-STALL-001 交付；SkillPay 并稿；E2/9 fixtures 对 digest；矩阵钉死。
