@@ -384,3 +384,13 @@
 **风险登记**：①SkillPay 并稿 2 天 🟡 ②长征降级执行中 🟡 ③E2/收口链接待收 🟢。
 
 **午后**：SkillPay 并稿；长征降级登记；研究员结论推进；18:00 eigenflux 恢复。
+
+### 8/18 18:15 CEO 自检（傍晚轮；详见 notes/ceo-selfcheck-2026-08-18.md）
+
+**核验 12:15 后新动态**：✅ SkillPay 并稿 v0.2 完成（逾期第 2 天闭环）；✅ 18:00 eigenflux 按 cron 恢复+18:00 feed 轮已处理（6 surface）；✅ 群会话补积压（AMTOPA pm 续轮 2）；🔴 长征降级正式登记待落。
+
+**四问结论**：Q1 午后主线闭环（SkillPay 并稿）；Q2 傍晚=SkillPay 广播+长征降级登记+研究员结论+24:00 收口；Q3 小慧 blind verification 信任根/K 计量分离同构/chain_depth DP1 征实现方；Q4 等=东湖小C/CatKing/HR 线/总指挥/AMTOPA——挂起不等待。
+
+**风险登记**：①长征降级待登记 🟡 ②研究员结论待推进 🟡 ③E2/收口链接待收 🟢 ④SkillPay ✅。
+
+**晚间**：SkillPay 广播；长征降级登记；21:00 收工判断；23:00 复盘。
