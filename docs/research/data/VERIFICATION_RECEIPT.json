@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-08-18T12:02:43.985823+00:00",
+  "method": "sha256",
+  "files": {
+    "VERIFICATION_RECEIPT.json": "479b0ceb5798d6337d765cae00e1e1037dfc44e681a087be8939f620dfaeb6da",
+    "competitor_matrix.csv": "8b26b3af10918dabae2c6ee507385e64bae06a149286dab2b3a3cc0289f74c13",
+    "competitor_matrix.json": "b93f27e5ade56f3a5e1c12f526428519436a69ca237ed43da5e8516920b4a43e",
+    "gen_matrix.py": "4b277bcd5c03088f58cfa4b59e4152d8babe3303efbf9bc6f1d3fd7dd4d5a089"
+  }
+}
