@@ -1,0 +1,214 @@
+{
+  "@context": {
+    "label": "https://schema.org/name",
+    "KnowledgeNode": "https://example.org/kg/KnowledgeNode",
+    "DependencyEdge": "https://example.org/kg/DependencyEdge",
+    "source": {
+      "@type": "@id"
+    },
+    "target": {
+      "@type": "@id"
+    }
+  },
+  "schemaVersion": "mvp-kg-0.1",
+  "@graph": [
+    {
+      "id": "kp-001",
+      "label": "数与代数领域包含整数、小数和分数",
+      "grade": "小学",
+      "std_anchor": null,
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192469+00:00",
+        "reviewer": null,
+        "review_status": "pending",
+        "review_at": null,
+        "evidence": "数与代数领域包含整数、小数和分数"
+      },
+      "props": {},
+      "@type": "KnowledgeNode"
+    },
+    {
+      "id": "kp-002",
+      "label": "整数认识是后续学习的基础",
+      "grade": "小学",
+      "std_anchor": null,
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192605+00:00",
+        "reviewer": null,
+        "review_status": "pending",
+        "review_at": null,
+        "evidence": "整数认识是后续学习的基础"
+      },
+      "props": {},
+      "@type": "KnowledgeNode"
+    },
+    {
+      "id": "kp-003",
+      "label": "小数的意义建立在整数位值制上",
+      "grade": "小学",
+      "std_anchor": null,
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192612+00:00",
+        "reviewer": null,
+        "review_status": "pending",
+        "review_at": null,
+        "evidence": "小数的意义建立在整数位值制上"
+      },
+      "props": {},
+      "@type": "KnowledgeNode"
+    },
+    {
+      "id": "kp-004",
+      "label": "分数表示整体的一部分",
+      "grade": "小学",
+      "std_anchor": null,
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192617+00:00",
+        "reviewer": null,
+        "review_status": "pending",
+        "review_at": null,
+        "evidence": "分数表示整体的一部分"
+      },
+      "props": {},
+      "@type": "KnowledgeNode"
+    },
+    {
+      "id": "kp-005",
+      "label": "分数的加减法需要先理解通分",
+      "grade": "小学",
+      "std_anchor": null,
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192621+00:00",
+        "reviewer": null,
+        "review_status": "pending",
+        "review_at": null,
+        "evidence": "分数的加减法需要先理解通分"
+      },
+      "props": {},
+      "@type": "KnowledgeNode"
+    },
+    {
+      "id": "kp-006",
+      "label": "小数与分数可以互相转化",
+      "grade": "小学",
+      "std_anchor": null,
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192625+00:00",
+        "reviewer": null,
+        "review_status": "pending",
+        "review_at": null,
+        "evidence": "小数与分数可以互相转化"
+      },
+      "props": {},
+      "@type": "KnowledgeNode"
+    },
+    {
+      "id": "edge-kp-001->kp-002",
+      "source": "kp-001",
+      "target": "kp-002",
+      "relation": "prerequisite",
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192608+00:00",
+        "reviewer": "demo-reviewer",
+        "review_status": "approved",
+        "review_at": "2026-08-22T13:14:46.192632+00:00",
+        "evidence": "顺序共现：kp-001 先于 kp-002 出现"
+      },
+      "props": {},
+      "@type": "DependencyEdge"
+    },
+    {
+      "id": "edge-kp-002->kp-003",
+      "source": "kp-002",
+      "target": "kp-003",
+      "relation": "prerequisite",
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192615+00:00",
+        "reviewer": "demo-reviewer",
+        "review_status": "approved",
+        "review_at": "2026-08-22T13:14:46.192634+00:00",
+        "evidence": "顺序共现：kp-002 先于 kp-003 出现"
+      },
+      "props": {},
+      "@type": "DependencyEdge"
+    },
+    {
+      "id": "edge-kp-003->kp-004",
+      "source": "kp-003",
+      "target": "kp-004",
+      "relation": "prerequisite",
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192619+00:00",
+        "reviewer": "demo-reviewer",
+        "review_status": "approved",
+        "review_at": "2026-08-22T13:14:46.192635+00:00",
+        "evidence": "顺序共现：kp-003 先于 kp-004 出现"
+      },
+      "props": {},
+      "@type": "DependencyEdge"
+    },
+    {
+      "id": "edge-kp-004->kp-005",
+      "source": "kp-004",
+      "target": "kp-005",
+      "relation": "prerequisite",
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192623+00:00",
+        "reviewer": "demo-reviewer",
+        "review_status": "approved",
+        "review_at": "2026-08-22T13:14:46.192636+00:00",
+        "evidence": "顺序共现：kp-004 先于 kp-005 出现"
+      },
+      "props": {},
+      "@type": "DependencyEdge"
+    },
+    {
+      "id": "edge-kp-005->kp-006",
+      "source": "kp-005",
+      "target": "kp-006",
+      "relation": "prerequisite",
+      "provenance": {
+        "source_ref": "sample-curriculum",
+        "extraction_method": "heuristic-fallback",
+        "extraction_model": "heuristic-v1",
+        "extracted_at": "2026-08-22T13:14:46.192627+00:00",
+        "reviewer": "demo-reviewer",
+        "review_status": "approved",
+        "review_at": "2026-08-22T13:14:46.192637+00:00",
+        "evidence": "顺序共现：kp-005 先于 kp-006 出现"
+      },
+      "props": {},
+      "@type": "DependencyEdge"
+    }
+  ]
+}
