@@ -1,0 +1,7 @@
+id,label,grade,std_anchor,source_ref,extraction_method,extraction_model,extracted_at,reviewer,review_status,review_at,evidence
+kp-001,数与代数领域包含整数、小数和分数,小学,,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192469+00:00,,pending,,数与代数领域包含整数、小数和分数
+kp-002,整数认识是后续学习的基础,小学,,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192605+00:00,,pending,,整数认识是后续学习的基础
+kp-003,小数的意义建立在整数位值制上,小学,,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192612+00:00,,pending,,小数的意义建立在整数位值制上
+kp-004,分数表示整体的一部分,小学,,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192617+00:00,,pending,,分数表示整体的一部分
+kp-005,分数的加减法需要先理解通分,小学,,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192621+00:00,,pending,,分数的加减法需要先理解通分
+kp-006,小数与分数可以互相转化,小学,,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192625+00:00,,pending,,小数与分数可以互相转化
