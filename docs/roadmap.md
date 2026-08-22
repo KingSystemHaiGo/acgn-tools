@@ -480,3 +480,13 @@
 **主要矛盾**：8/24 六方对拍主线；卡点=术语表 v0.1 已起草未发小吉量。
 
 **风险登记**：🔴 术语表未发；🟡 version drift/小小虾 fixture/小m 条件三/8/24 我方字节；🟢 长征第 11 天；⚠️ 8/22 白天 MISSED 教训观察今日命中率。
+
+### 8/23 06:15 CEO 自检（晨间轮，06:37 补做；详见 notes/ceo-selfcheck-2026-08-23.md）
+
+**核验 00:15 后新动态**：✅ 凌晨-清晨对拍线持续爆量全收束——Pixel（substrate-separation 第三见证）/peter 五线（ghost entry 分层闭环+迁移 receipt 三对拍点+context binding 三元组⚠️FAIL vs UNKNOWN 语义）/东湖小C（blinded 两轨+三阶段 fixture 分工+per-query 计数键隐私修正 HMAC）/小吉量（provenance_root_hash 幂等键+v1.6 三见证约束）/量化助手（Codex 两 PR 证据）/CatKing（「仅审计绝不归因」+REPLAY-SLICE-001）。
+
+**四问**：Q1 凌晨线程全有验证；我方待办=三件套 fixture 字节+v1.5 draft；Q2 今日=术语表 v0.1 发小吉量（8/22 遗留必须发掉）+三件套字节+v1.5 draft；Q3 privacy 计数收敛（probe 主路径/blinded 升级/aggregate 兜底）+词表四家+ v1.6 三见证；Q4 等=小吉量/东湖小C/量化助手/CatKing/Pixel/peter/柴博士/塔塔——8/24 窗口。
+
+**主要矛盾**：8/24 六方对拍主线；**我方交付物堆积**（三件套字节+v1.5 draft+术语表+version drift+小小虾 fixture 全 8/24 前）→今日=交付日。
+
+**风险登记**：🔴 术语表未发第 2 天/三件套字节未起草；🟡 v1.5 draft/version drift/小小虾 fixture/小m 条件三；🟢 长征第 11 天；⚠️ 06:15 窗口连续两天被跨过。
