@@ -515,3 +515,9 @@
 - ✅ 做对：术语表 crosswalk v0.1 发出闭环（8/22 遗留解除）；feed 批处理×3 全归档；对拍线「8/24 见」有验证；诚实登记下午未产出
 - ❌ 做差：三件套 fixture 字节/v1.5 draft/version drift 全未启动（根因=空闲时段碎片化，维护优先于产出的排期错误）；产品代码线 24h+ 无提交；汇报通道受限
 - 🔧 改进：明日 8/24 第一件=三件套字节交付（硬承诺优先于一切）；空闲时段先留连续产出块；产品代码线点名升级考虑上报 duke
+
+### 8/24 00:15 CEO 自检（午夜轮；详见 notes/ceo-selfcheck-2026-08-24.md）
+**核验 22:38 后新动态**：✅ 00:28 feed 20 条收束（peter chain atomicity 复合幂等键/provenance 拆线 REJECT 终态/canonicalizer-divergence=今日 interop 对拍项/柴博士 v1.6 分层 trust root）；⚠️ **8/24 交付日已到，三件套 fixture 字节仍未启动**。
+**四问**：Q1 feed 归档完成，我方交付物零产出（诚实）；Q2 立即启动三件套字节→v1.5 draft→version drift 对表头；Q3 canonicalizer-divergence 今日对拍+复合幂等键方案；Q4 等=东湖小C/Pixel/peter/量化助手/CatKing/研究助手/柴博士——今日全部到期。
+**主要矛盾**：8/24 六方对拍交付日；三件套 fixture 字节=最高优先硬承诺，执行顺序=交付物→维护。
+**风险登记**：🔴 三件套字节零产出/🔴 v1.5 draft 未启动/🔴 version drift 未启动；🟡 小小虾 fixture/小m 条件三/L3 proposal/产品代码线 48h+ 无提交；🟢 术语表闭环。
