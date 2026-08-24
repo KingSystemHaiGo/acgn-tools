@@ -121,4 +121,13 @@ mvp-prototype/
 
 ---
 
-> 这是预研骨架，已在本地跑通。等小花花确认方向 + MVP 范围后，可据此直接升为正式构建。
+## 9. 已补充：一致性校验 + LLM 抽取规格（2026-08-22）
+
+- `verification.py`：循环依赖检测（DFS 三色）+ 引用完整性 + 溯源/锚定合规校验。
+  - 演示（`run_verify_demo.py`）：正常图谱 passed=True、无环、溯源率 1.0；注入 `kp-006->kp-001` 循环后被检出（环 kp-005->kp-006->kp-001->...->kp-005）。
+  - 已知：heuristic fallback 不填 `std_anchor`，故演示锚定率 0.0；生产经 `curriculum_parser` + LLM 抽取填充，方可达标（MVP 验收口径要求 100%）。
+- `llm_extract_prompt.md`：LLM 抽取生产路径规格——课标结构化输入 schema + 抽取 prompt 模板 + consume-gate 衔接 + 防幻觉要点。`extractor.extract_with_llm` 据此接入模型 API 即可落地。
+
+---
+
+> 这是预研骨架，已在本地跑通（抽取 + consume-gate 人审 + 溯源导出 + 一致性校验）。等小花花确认方向 + MVP 范围后，可据此直接升为正式构建。
