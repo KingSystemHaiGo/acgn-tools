@@ -82,3 +82,18 @@
   而 R4 fixture 断言在 37c5d73 时的 `run_all_fixtures.py` 只比对 verdict 不比 evidence（当时实现 evidence 是
   对齐 R4 断言格式但 fixture 侧断言脚本未做 evidence 对比）。R5 起 fixture 侧已升级为 verdict+evidence 双对比。
   该差异已通过修复 + 双对比复跑闭环。
+
+## R4 可执行测试全绿（8/26 产品攻坚 Day 1，commit 待填）
+
+> 落地：小花花（规格版→可执行 pytest 版，不再等长征/星星）｜ pytest 9.1.1（user 级安装）
+
+### 验证方法
+`cd apps/conflict-detector && python3 -m pytest tests/test_conflict_detector.py -v`
+
+### 验证结果：14 PASS / 0 FAIL（0.04s）
+- 001/002 正控 CONFLICTED+证据链；003/004 负控 SUPERSEDED；005/006 边界 fail-closed 升格 CONFLICTED；
+  007 循环 CONFLICTED；008/009/010 REJECTED；011 split SUPERSEDED+子 claim 非 derived；
+  V5 覆盖 11 条全在；V4 幂等（001/008/005 各一）
+
+### 字节级收据
+`sha256sum tests/test_conflict_detector.py fixtures/CONFLICT-*.json`（12 文件合计摘要 a6e54bfafecca3b4，禁手抄）
