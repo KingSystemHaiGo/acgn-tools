@@ -28,3 +28,13 @@ uv sync
 
 ## 技术栈
 FastAPI + SQLite + conflict_detector（T002-R3，detector 在线）
+
+## 组装三件套（8/27 产品攻坚 Day 2 完成）
+
+**闭环验证通过**（本地 8000 端口实测）：
+`POST /api/import`（多行断言）→ `GET /api/conflicts`（detect 三维判定+证据链）→ `POST /api/arbitrate`（KEEP_A/B/SPLIT/REDEFINE 入年轮）→ `GET /api/rulings`（append-only 时间线）→ `GET /`（web 前端展示）
+
+**8/27 组装修复**：
+1. dict→KnowledgeEntry 胶水（`entry_from_row`）——原实现直接把 SQLite 行 dict 传给 `detect()`（期望对象），异常被吞后全部误标 CONFLICTED
+2. import 多行改为同 claim 独立 source 条目——原实现后续行标 derived+parent，lineage 优先剪枝吞掉冲突（全变 SUPERSEDED），与「多行断言互相矛盾即可检出冲突」的设计意图矛盾
+3. conflicts 接口输出真实证据链（字段/修订号/双方值）

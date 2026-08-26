@@ -22,10 +22,38 @@ DETECTOR_PATH = Path(__file__).parent.parent / "conflict-detector" / "conflict_d
 try:
     import sys
     sys.path.insert(0, str(DETECTOR_PATH.parent))
-    from conflict_detector import detect  # type: ignore
+    from conflict_detector import (  # type: ignore
+        KnowledgeEntry, LineageLink, SourceRole, ValidityWindow, detect,
+    )
     HAS_DETECTOR = True
 except Exception:
     HAS_DETECTOR = False
+
+
+def entry_from_row(row: dict) -> Optional[KnowledgeEntry]:
+    """DB 行（dict）→ KnowledgeEntry（组装胶水：detect() 消费对象而非 dict）。
+    source_role 字段较宽松（source/derived/superseded），映射到枚举。
+    """
+    if not HAS_DETECTOR:
+        return None
+    sr_map = {"source": SourceRole.CONFIRMED, "derived": SourceRole.CONFIRMED,
+              "superseded": SourceRole.SUPERSEDED, "confirmed": SourceRole.CONFIRMED,
+              "conflicted": SourceRole.CONFLICTED}
+    try:
+        return KnowledgeEntry(
+            claim_id=row["claim_id"],
+            entry_id=row["entry_id"],
+            revision=int(str(row["revision"]).replace("rev-", "") or 0),
+            effect_digest=row["effect_digest"] or "",
+            lineage_link=LineageLink(row["lineage_link"] or "source"),
+            parent_claim_id=row.get("parent_claim_id"),
+            validity_window=ValidityWindow(int(row.get("established") or 0),
+                                           row.get("fence")),
+            source_role=sr_map.get(row.get("source_role"), SourceRole.CONFIRMED),
+            content=row.get("content") or "",
+        )
+    except Exception:
+        return None
 
 DB_PATH = Path(__file__).parent / "knowledge.db"
 
@@ -111,23 +139,19 @@ def import_text(req: ImportReq):
 
     created = []
     with db() as c:
-        # 同 claim 已有条目则作为前驱（后续 entry 为派生候选）
-        existing = c.execute(
-            "SELECT entry_id FROM entries WHERE claim_id=? ORDER BY established DESC LIMIT 1",
-            (claim_id,),
-        ).fetchone()
-        parent = existing["entry_id"] if existing else None
         for i, line in enumerate(lines):
             entry_id = f"{claim_id}-e{i}-{canonical(line)[:6]}"
             digest = canonical(line)
-            lineage = "derived" if parent else "source"
+            # 同批多行=同一 claim 下的独立 source 断言（互相矛盾即可检出冲突）
+            # 8/27 组装修复：原实现后续行标 derived+parent——lineage 优先剪枝会吞掉冲突（全变 SUPERSEDED），
+            # 与 docstring「多行断言互相矛盾时即可检出冲突」矛盾；改回 source/source（validity 重叠→CONFLICTED→用户仲裁）
             c.execute(
                 """INSERT OR IGNORE INTO entries
                    (claim_id, entry_id, revision, effect_digest, lineage_link,
                     parent_claim_id, established, fence, source_role, content, provenance, created_at)
                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
-                (claim_id, entry_id, f"rev-{i + 1}", digest, lineage,
-                 parent, 0, None, "source", line, req.title or "", now),
+                (claim_id, entry_id, f"rev-{i + 1}", digest, "source",
+                 None, 0, None, "source", line, req.title or "", now),
             )
             created.append({"claim_id": claim_id, "entry_id": entry_id, "content": line[:40]})
     return {"imported": len(created), "claim_id": claim_id, "entries": created, "detector": HAS_DETECTOR}
@@ -147,22 +171,38 @@ def list_conflicts():
 
     conflicts = []
     for claim_id, entries in groups.items():
+        objs = []
+        result = None
         if not HAS_DETECTOR:
             # 无检测器时：同 claim 多 entry 且 digest 不同即标 conflicted（简化）
             digests = {e["effect_digest"] for e in entries}
             verdict = "CONFLICTED" if len(digests) > 1 else "OK"
         else:
             try:
-                result = detect(entries)
-                verdict = result.verdict if hasattr(result, "verdict") else result.get("verdict", "OK")
+                # 组装胶水：DB 行(dict) → KnowledgeEntry → detect()
+                objs = [entry_from_row(dict(e)) for e in entries]
+                objs = [o for o in objs if o is not None]
+                if not objs:
+                    verdict = "OK"
+                else:
+                    result = detect(objs)
+                    verdict = result.verdict if hasattr(result, "verdict") else result.get("verdict", "OK")
             except Exception:
                 verdict = "CONFLICTED"
         if verdict == "CONFLICTED":
+            evidence = []
+            if result is not None and getattr(result, "evidence", None):
+                evidence = [{"field": ev[0], "revision": ev[1],
+                             "value_a": str(ev[2]), "value_b": str(ev[3])}
+                            for ev in result.evidence]
+            if not evidence:
+                evidence = [{"field": "content",
+                             "values": [e["content"][:50] for e in entries]}]
             conflicts.append({
                 "claim_id": claim_id,
                 "entries": entries,
                 "verdict": verdict,
-                "evidence": [{"field": "content", "values": [e["content"][:50] for e in entries]}],
+                "evidence": evidence,
             })
     return {"conflicts": conflicts, "count": len(conflicts)}
 
