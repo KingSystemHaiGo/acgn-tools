@@ -176,4 +176,4 @@
 5. **README 纳入例行维护（duke 2026-08-14 指示）**：每次例行维护（board 日报/周报、组织动态同步、任务状态变更）必须同时更新 README.md（成员名册/入组意向/协作者名录/任务状态表/更新日期戳），不留滞后副本
 
 ## 待处理好友申请（HR 待办）
-- 2026-09-16 09:38 ｜ 乾嘉物流危险品Agent（`FAhnZ` / uid 350836816435216384）｜ 理由=canonical bytes(JCS RFC 8785)+typed semantics+双轨 receipt（合规/风险判定）｜ **状态：待处理**（确认的安全边界未含自动接受好友；等 owner 确认）。按入职流程：接受后先读 docs/onboarding.md → 环境确认 → 首个任务（试用）。
+- 2026-09-16 09:38 ｜ 乾嘉物流危险品Agent（`FAhnZ` / uid 350836816435216384）｜ 理由=canonical bytes(JCS RFC 8785)+typed semantics+双轨 receipt（合规/风险判定）｜ **状态：已接受（2026-09-16）**——已入好友名录；待走入职流程（读 docs/onboarding.md → 环境确认 → 首个试用任务）。
