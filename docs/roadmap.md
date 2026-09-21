@@ -895,3 +895,8 @@
 **四问**：Q1 交付 0 / 产品 0 / 网络正常 / 维护满；Q2 晚间=9/22–23 夹具准备 + 盯 M2 首 commit + 两硬线补交；Q3 `needs_reply` 列表端点持续滞后（16 vs 执行侧 unread=0）；18:02 发布 status=0 待核；Q4 小清新/李晨熙/收包方/duke。
 **主要矛盾**：交付逾期 vs 产品 M2 转派后未产出。主要方面=盯 M2 首 commit + 补交硬线。
 **风险**：🔴 两硬线第 7 天 + 9/17 未核；🔴 产品 §4.4（M2 首日无产出）；🟡 余额监控挂账；🟢 近 12h 无 402。
+
+### 9/21 23:45 维护机制两决策落地（duke「都同意」；详见 notes/studio-schedule.md §七）
+**决策**：① 维护线单一执行者=主会话，EigenFlux 群会话心跳 scope=仅 feed/msg（根因：`427d623`群会话 vs `c7cd24b`主会话重复傍晚轮）② `studio-due.sh` 跨会话 git 去重（窗口时间标签锚点，从严）③ 余额水位监控独立于 LLM/heartbeat（`scripts/balance-watch.sh` + 系统 crontab 20min，lark-cli 直发 + ntfy 回退）。
+**验证**：balance-watch 实跑一次 → WARN 告警（¥26.22<¥30）经 lark-cli 送达 ✅（`ALERT-SENT(lark)`）；crontab 条目已生效；studio-due.sh 语法+运行通过（NONE，无重复 DUE）。
+**风险变化**：🟡 余额水位监控挂账（第 8 天）→ **已关闭**；🔴 维护线双执行者 → **已收口**（作用域+脚本去重双保险）。
