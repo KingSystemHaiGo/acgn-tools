@@ -1,0 +1,264 @@
+{
+  "generated_at": "2026-08-18T12:02:43.984510+00:00",
+  "version": "v0.2",
+  "count": 28,
+  "products": [
+    {
+      "category": "通用PKM",
+      "product": "Roam Research",
+      "agent_score": 1,
+      "graph": "块级双向链接，不可验证",
+      "edu_fit": "无教育语义",
+      "key": "双向链接范式",
+      "takeaway": "依赖概念与知识依赖边同构"
+    },
+    {
+      "category": "通用PKM",
+      "product": "Obsidian Graph View",
+      "agent_score": 1.5,
+      "graph": "可视化成熟，无自主构建",
+      "edu_fit": "教师可用，无锚点",
+      "key": "本地Markdown知识库",
+      "takeaway": "本地优先+开放格式信任感"
+    },
+    {
+      "category": "通用PKM",
+      "product": "Notion AI",
+      "agent_score": 2.5,
+      "graph": "关系库可建模，非自动",
+      "edu_fit": "题库可以，无追踪",
+      "key": "一体化工作区+AI",
+      "takeaway": "简单有效的产品形态"
+    },
+    {
+      "category": "通用PKM",
+      "product": "Mem.ai",
+      "agent_score": 2.5,
+      "graph": "嵌入检索非真图谱",
+      "edu_fit": "低",
+      "key": "AI优先个人记忆",
+      "takeaway": "自动组织体验好但准确性差=图谱grounding机会"
+    },
+    {
+      "category": "通用PKM",
+      "product": "Rewind/Limitless",
+      "agent_score": 2,
+      "graph": "行为数据记忆图谱",
+      "edu_fit": "低",
+      "key": "屏幕/录音记忆",
+      "takeaway": "多模态采集学习行为方向"
+    },
+    {
+      "category": "通用PKM",
+      "product": "Khoj",
+      "agent_score": 3,
+      "graph": "检索为主，无显式图谱",
+      "edu_fit": "低",
+      "key": "开源AI第二大脑",
+      "takeaway": "开源+本地部署安全性参照"
+    },
+    {
+      "category": "通用PKM",
+      "product": "Marginalia",
+      "agent_score": 2,
+      "graph": "大纲式非图结构",
+      "edu_fit": "中",
+      "key": "AI原生笔记(YC)",
+      "takeaway": "自动层级大纲思路"
+    },
+    {
+      "category": "AI教育",
+      "product": "Khanmigo",
+      "agent_score": 3,
+      "graph": "内部技能树+掌握度，不公开不可验证",
+      "edu_fit": "强(美国Common Core)",
+      "key": "可汗学院AI助教",
+      "takeaway": "Socratic引导而非给答案哲学"
+    },
+    {
+      "category": "AI教育",
+      "product": "松鼠AI",
+      "agent_score": 2.5,
+      "graph": "纳米级知识点+动态追踪，商业黑盒",
+      "edu_fit": "强(国内课标)",
+      "key": "国内K12自适应",
+      "takeaway": "验证图谱+路径推荐商业模式成立"
+    },
+    {
+      "category": "AI教育",
+      "product": "作业帮/猿辅导",
+      "agent_score": 2,
+      "graph": "知识点标注+难度分层，不可验证不开放",
+      "edu_fit": "强",
+      "key": "拍照搜题双雄",
+      "takeaway": "题库与知识点联动、家庭硬件闭环"
+    },
+    {
+      "category": "AI教育",
+      "product": "Duolingo",
+      "agent_score": 2.5,
+      "graph": "技能树+HLR掌握度模型，行业标杆但私有",
+      "edu_fit": "语言领域强",
+      "key": "语言学习",
+      "takeaway": "技能树+掌握度双轨设计范本"
+    },
+    {
+      "category": "AI教育",
+      "product": "Quizlet AI",
+      "agent_score": 2.5,
+      "graph": "学习集-掌握度二部图，无依赖边",
+      "edu_fit": "中",
+      "key": "闪卡平台+AI",
+      "takeaway": "用户自建内容天花板=缺可信图谱"
+    },
+    {
+      "category": "AI教育",
+      "product": "IXL",
+      "agent_score": 2.5,
+      "graph": "知识点体系极细，私有(网页可浏览无开放API)",
+      "edu_fit": "强",
+      "key": "美国K12自适应",
+      "takeaway": "实时诊断报告",
+      "verified": "2026-08-18 实测：ixl.com skill-plans 页面公开可浏览但无导出/API"
+    },
+    {
+      "category": "AI教育",
+      "product": "洋葱学园",
+      "agent_score": 2,
+      "graph": "图谱路径学习，私有(官网宣传知识图谱无公开数据)",
+      "edu_fit": "强",
+      "key": "国内微课",
+      "takeaway": "微课+图谱结合",
+      "verified": "2026-08-18 实测：官网含知识图谱与AI思维链标签，无公开数据"
+    },
+    {
+      "category": "学术数据",
+      "product": "KT学术数据集(ASSISTments/EdNet)",
+      "agent_score": -1,
+      "graph": "题目-作答序列，非课程图谱",
+      "edu_fit": "研究用",
+      "key": "开放作答数据",
+      "takeaway": "开放数据但没有知识依赖图"
+    },
+    {
+      "category": "建图Agent",
+      "product": "微软GraphRAG",
+      "agent_score": 3.5,
+      "graph": "实体-关系抽取+社区摘要，业界标杆",
+      "edu_fit": "中(不懂课标语义)",
+      "key": "文档级自动建图",
+      "takeaway": "可追溯来源与教育可验证诉求一致"
+    },
+    {
+      "category": "建图Agent",
+      "product": "Neo4j LLM Graph Builder",
+      "agent_score": 3.5,
+      "graph": "成熟企业级自动建图管线",
+      "edu_fit": "中",
+      "key": "图数据库+LLM",
+      "takeaway": "图数据库生态可作底层参考"
+    },
+    {
+      "category": "建图Agent",
+      "product": "Graphiti",
+      "agent_score": 3.5,
+      "graph": "增量维护、时间旅行、时效感知",
+      "edu_fit": "低(通用)",
+      "key": "时序知识图谱引擎",
+      "takeaway": "随时间更新的溯源=学生成长追踪所需"
+    },
+    {
+      "category": "建图Agent",
+      "product": "mem0",
+      "agent_score": 3,
+      "graph": "实体/事实记忆自动提取",
+      "edu_fit": "低",
+      "key": "开源AI记忆层",
+      "takeaway": "用户画像记忆+图谱结合"
+    },
+    {
+      "category": "建图Agent",
+      "product": "LlamaIndex/LangChain",
+      "agent_score": 3,
+      "graph": "多关系类型自动抽取",
+      "edu_fit": "中",
+      "key": "框架级建图",
+      "takeaway": "属性图契合知识点建模"
+    },
+    {
+      "category": "建图Agent",
+      "product": "Diffbot",
+      "agent_score": 3,
+      "graph": "自动全网建图",
+      "edu_fit": "低",
+      "key": "全网实体图谱",
+      "takeaway": "不适合教纲知识"
+    },
+    {
+      "category": "建图Agent",
+      "product": "KAG(OpenSPG)",
+      "agent_score": 3,
+      "graph": "逻辑规则+图谱融合",
+      "edu_fit": "低",
+      "key": "蚂蚁知识增强生成",
+      "takeaway": "LLM+图谱双向增强范式"
+    },
+    {
+      "category": "专门数据",
+      "product": "国家中小学智慧教育平台",
+      "agent_score": -1,
+      "graph": "按学科→学段→单元→课时组织，无开放图谱",
+      "edu_fit": "强(官方)",
+      "key": "教育部平台",
+      "takeaway": "官方内容组织可作结构参考",
+      "verified": "2026-08-18 实测：basic.smartedu.cn 无开放API痕迹"
+    },
+    {
+      "category": "专门数据",
+      "product": "义务教育数学课程标准2022",
+      "agent_score": -1,
+      "graph": "内容要求183条+学业要求，可追溯唯一权威锚点",
+      "edu_fit": "强(官方)",
+      "key": "官方课程标准",
+      "takeaway": "本项目19个课标锚点的合法性基础"
+    },
+    {
+      "category": "专门数据",
+      "product": "北师大/华东师大知识图谱科研",
+      "agent_score": -1,
+      "graph": "论文多，数据集基本不公开",
+      "edu_fit": "中",
+      "key": "学术研究",
+      "takeaway": "方向验证价值，无数据复用价值",
+      "verified": "2026-08-18 实测：GitHub 检索无公开数据集"
+    },
+    {
+      "category": "专门数据",
+      "product": "Khan Academy技能树",
+      "agent_score": 1,
+      "graph": "依赖边在私有API内，无官方结构化导出",
+      "edu_fit": "强(美国)",
+      "key": "在线学习平台",
+      "takeaway": "khan-exercises开源但无prerequisites字段；第三方khan-graphql可爬取非官方",
+      "verified": "2026-08-18 实测：官方API反爬(400)；Khan/khan-exercises code search prerequisites=0；KA Lite仅内容镜像"
+    },
+    {
+      "category": "专门数据",
+      "product": "KT公开数据集",
+      "agent_score": -1,
+      "graph": "作答-成绩数据，非知识点依赖图谱",
+      "edu_fit": "研究用",
+      "key": "知识追踪数据集",
+      "takeaway": "与图谱互补，可作掌握度评测底料"
+    },
+    {
+      "category": "专门数据",
+      "product": "W3C教育本体",
+      "agent_score": -1,
+      "graph": "学术社区存在，无规模化落地",
+      "edu_fit": "低",
+      "key": "本体标准",
+      "takeaway": "术语规范化参考"
+    }
+  ]
+}

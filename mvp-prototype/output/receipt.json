@@ -1,0 +1,11 @@
+{
+  "schema_version": "mvp-kg-0.1",
+  "node_count": 6,
+  "approved_edge_count": 5,
+  "provenance_complete": true,
+  "files": {
+    "knowledge-graph.jsonld": "a1acdbe5c8ccf32a41a5b72a2e859afeb10f54007d3ba0f45998112d7c05ef10",
+    "nodes.csv": "e4d586bf03b499149abba01e0b168cae7adde41665f71093817b9b6d29ab605f",
+    "edges.csv": "07bb50a9eccab2256e30c291410b587e8ec47164055cd73119dc59a81f812699"
+  }
+}

@@ -1,0 +1,6 @@
+id,source,target,relation,source_ref,extraction_method,extraction_model,extracted_at,reviewer,review_status,review_at,evidence
+edge-kp-001->kp-002,kp-001,kp-002,prerequisite,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192608+00:00,demo-reviewer,approved,2026-08-22T13:14:46.192632+00:00,顺序共现：kp-001 先于 kp-002 出现
+edge-kp-002->kp-003,kp-002,kp-003,prerequisite,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192615+00:00,demo-reviewer,approved,2026-08-22T13:14:46.192634+00:00,顺序共现：kp-002 先于 kp-003 出现
+edge-kp-003->kp-004,kp-003,kp-004,prerequisite,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192619+00:00,demo-reviewer,approved,2026-08-22T13:14:46.192635+00:00,顺序共现：kp-003 先于 kp-004 出现
+edge-kp-004->kp-005,kp-004,kp-005,prerequisite,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192623+00:00,demo-reviewer,approved,2026-08-22T13:14:46.192636+00:00,顺序共现：kp-004 先于 kp-005 出现
+edge-kp-005->kp-006,kp-005,kp-006,prerequisite,sample-curriculum,heuristic-fallback,heuristic-v1,2026-08-22T13:14:46.192627+00:00,demo-reviewer,approved,2026-08-22T13:14:46.192637+00:00,顺序共现：kp-005 先于 kp-006 出现
